@@ -61,10 +61,16 @@ class BookController extends Controller
         return response()->json(['message' => 'Book updated successfully', 'book' => $book], 200);
     }
 
-    public function destroy(Book $book)
+    public function destroy($id)
     {
-        $book->delete();
-        return response()->json(['message' => 'Book deleted successfully'], 200);
+        $book = Book::find($id);
+        if($book){
+            $book->delete();
+            return response()->json(['message' => 'Book deleted successfully', 'code' => 200]);
+        } else{
+            return response()->json(['message' => "Book with id: $id does not exist!", 'code' => 500]);
+        }
+       
     }
 
 }

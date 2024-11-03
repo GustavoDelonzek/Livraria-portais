@@ -163,11 +163,21 @@ export default {
         try {
           const response = await axios.post(url, formData);
           if (response.status === 200) {
+            this.book = {
+              title: '',
+              author_id: null,
+              publisher_id: null,
+              published_year: '',
+              genre: '',
+              price: null,
+              stock: null,
+              description: ''
+            };
+
             alert(response.data.message);
           }
         } catch (error) {
-          console.error("Error:", error);
-          alert("An error occurred while saving the book.");
+          console.log(error)
         }
 
       }

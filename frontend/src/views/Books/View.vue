@@ -18,6 +18,9 @@
           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Description
           </th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Events
+          </th>
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
@@ -37,6 +40,11 @@
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
             {{ book.description }}
           </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            <button @click.prevent="deleteBook(book.id)">Delete</button>
+          </td>
+
+
         </tr>
       </tbody>
     </table>
@@ -63,6 +71,17 @@
         )).catch((error) => {
           console.log(error);
         });
+      },
+      async deleteBook(id){
+        let url = `http://127.0.0.1:8000/api/delete_book/${id}`;
+        await axios.delete(url).then(response => {
+          if (response.data.code == 200){
+            alert(response.data.message);
+            this.getBooks();
+          }
+        }).catch(error => {
+          console.log(error);
+        })
       }
     },
     mounted(){
