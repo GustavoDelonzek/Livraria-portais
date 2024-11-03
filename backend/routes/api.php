@@ -6,4 +6,5 @@ use App\Http\Controllers\BookController;
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('books', [BookController::class, 'index']);
+Route::post('save_book', [BookController::class, 'create']);
 

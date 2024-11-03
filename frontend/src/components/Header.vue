@@ -5,7 +5,7 @@
           <a href="/" class="text-xl font-bold text-gray-800">Logo</a>
           <div class="space-x-4">
             <RouterLink to="/" class="text-gray-600 hover:text-gray-900">Home</RouterLink>
-            <RouterLink to="/about" class="text-gray-600 hover:text-gray-900">About</RouterLink>
+            <RouterLink to="/addBook" class="text-gray-600 hover:text-gray-900">Add Books</RouterLink>
             <RouterLink to="/books" class="text-gray-600 hover:text-gray-900">Books</RouterLink>
           </div>
         </div>
