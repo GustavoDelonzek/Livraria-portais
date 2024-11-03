@@ -59,8 +59,7 @@
       async getBooks(){
         let url = 'http://127.0.0.1:8000/api/books';
         await axios.get(url).then(response => (
-          this.books = response.data.books,
-        console.log(this.books)
+          this.books = response.data.books
         )).catch((error) => {
           console.log(error);
         });

@@ -19,7 +19,7 @@ class BookController extends Controller
         return $book;
     });
 
-    return response()->json(["books" => $booksWithNames, "teste" => 2]);
+    return response()->json(["books" => $booksWithNames]);
     }
     
     public function create(Request $request)
