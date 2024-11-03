@@ -9,14 +9,23 @@ class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::all();
-        return response()->json($books);
+        $books = Book::with(['author:id,name', 'publisher:id,name'])->get();
+
+    $booksWithNames = $books->map(function ($book) {
+        $book->author_name = $book->author->name ?? null; 
+        $book->publisher_name = $book->publisher->name ?? null; 
+        unset($book->author, $book->publisher); 
+
+        return $book;
+    });
+
+    return response()->json(["books" => $booksWithNames, "teste" => 2]);
     }
     
     public function create(Request $request)
     {
         $book = Book::create($request->all());
-        return response()->json(['message' => 'Book created successfully', 'book' => $book], 201);
+        return response()->json(['message' => 'Book created successfully', 'book' => $book],  201);
     }
 
     public function update(Request $request, Book $book)

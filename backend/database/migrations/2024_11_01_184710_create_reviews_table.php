@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // ID do usuário
-            $table->unsignedBigInteger('book_id'); // ID do livro
-            $table->unsignedTinyInteger('rating')->default(0); // Avaliação
-            $table->text('comment')->nullable(); // Comentário
+            $table->unsignedBigInteger('user_id'); 
+            $table->unsignedBigInteger('book_id'); 
+            $table->unsignedTinyInteger('rating')->default(0); 
+            $table->text('comment')->nullable(); 
             $table->timestamps();
         
-            // Chaves estrangeiras
+            
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
         });
