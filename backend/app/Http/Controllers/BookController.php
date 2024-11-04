@@ -55,12 +55,47 @@ class BookController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, Book $book)
-    {
-        $book->update($request->all());
-        return response()->json(['message' => 'Book updated successfully', 'book' => $book], 200);
+
+    public function get_book($id){
+        $book = Book::find($id);
+
+        return response()->json($book);
     }
 
+    public function update($id ,Request $request)
+    {
+        $book = Book::where('id', $id)->first();
+
+        $request->validate([
+            'title' => 'required|string',
+            'author_id' => 'required|exists:authors,id',
+            'publisher_id' => 'required|exists:publishers,id',
+            'published_year' => 'required|digits:4',
+            'genre' => 'required|string',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
+            'description' => 'nullable|string'
+        ]);
+
+        $book->title = $request->title;
+        $book->author_id = $request->author_id;
+        $book->publisher_id = $request->publisher_id;
+        $book->published_year = $request->published_year;
+        $book->genre = $request->genre;
+        $book->price = $request->price;
+        $book->stock = $request->stock;
+        $book->description = $request->description;
+        $book->save();
+
+
+        $book->load('author', 'publisher');
+
+        return response()->json([
+            'message' => 'Book Updated successfully',
+            'book' => $book
+        ], 200);
+           
+    }
     public function destroy($id)
     {
         $book = Book::find($id);

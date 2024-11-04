@@ -15,9 +15,7 @@
           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Publisher
           </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Description
-          </th>
+          
           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Events
           </th>
@@ -37,11 +35,10 @@
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
             {{ book.publisher_name }}
           </td>
+         
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-            {{ book.description }}
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-            <button @click.prevent="deleteBook(book.id)">Delete</button>
+            <button @click.prevent="deleteBook(book.id)"  class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out">Delete</button>
+            <RouterLink :to="{ name: 'editBook', params: {id: book.id} }"  class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-md hover:shadow-lg transition duration-150 ease-in-out">Edit</RouterLink>
           </td>
 
 
