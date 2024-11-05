@@ -22,6 +22,13 @@ class BookController extends Controller
         return response()->json(["books" => $booksWithNames]);
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $books = Book::where('title', 'like', "%$query%")->get();
+        return response()->json(['books' => $books]);
+    }
+
     public function create(Request $request)
     {
         $request->validate([
@@ -56,13 +63,14 @@ class BookController extends Controller
     }
 
 
-    public function get_book($id){
+    public function get_book($id)
+    {
         $book = Book::find($id);
 
         return response()->json($book);
     }
 
-    public function update($id ,Request $request)
+    public function update($id, Request $request)
     {
         $book = Book::where('id', $id)->first();
 
@@ -94,18 +102,18 @@ class BookController extends Controller
             'message' => 'Book Updated successfully',
             'book' => $book
         ], 200);
-           
+
     }
     public function destroy($id)
     {
         $book = Book::find($id);
-        if($book){
+        if ($book) {
             $book->delete();
             return response()->json(['message' => 'Book deleted successfully', 'code' => 200]);
-        } else{
+        } else {
             return response()->json(['message' => "Book with id: $id does not exist!", 'code' => 500]);
         }
-       
+
     }
 
 }
