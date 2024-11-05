@@ -1,6 +1,10 @@
 <template>
   <div class="container mx-auto p-6">
-    <table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
+    <div class="flex justify-end">
+      
+      <RouterLink to="/addBook" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Adicionar novo livro</RouterLink>
+    </div> 
+    <table class="min-w-full bg-white border border-gray-200 my-8 rounded-lg overflow-hidden">
       <thead class="bg-gray-50">
         <tr>
           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -46,6 +50,7 @@
       </tbody>
     </table>
   </div>
+  <RouterView></RouterView>
 </template>
   
 <script>
