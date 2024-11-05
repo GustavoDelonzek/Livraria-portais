@@ -19,7 +19,20 @@ class LoginController extends Controller
         // Tentativa de login
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             // Login bem-sucedido
-            return response()->json(['message' => 'Login bem-sucedido!'], 200);
+            $user = Auth::user();
+
+            // Verifica se o usuário é admin
+            if ($user->is_admin) {
+                return response()->json([
+                    'message' => 'Login bem-sucedido! Você é um administrador.',
+                    'redirect' => '/admin/dashboard' // URL para redirecionar o admin
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Login bem-sucedido! Você é um usuário comum.',
+                    'redirect' => '/' // URL para redirecionar o usuário comum
+                ], 200);
+            }
         }
 
         // Login falhou
