@@ -1,6 +1,8 @@
-<template>
-  <main class="m-5">
 
+
+<template>
+  
+  <main class="m-5">
     <div v-if="errors.length">
       <div v-for="(error, index) in errors" :key="index">
         <div
@@ -102,7 +104,6 @@
 
 <script>
 import axios from 'axios';
-
 export default {
   name: 'addBook',
   data() {

@@ -7,6 +7,10 @@
             <RouterLink to="/" class="text-gray-600 hover:text-gray-900">Home</RouterLink>
             <RouterLink to="/addBook" class="text-gray-600 hover:text-gray-900">Add Books</RouterLink>
             <RouterLink to="/books" class="text-gray-600 hover:text-gray-900">Books</RouterLink>
+
+            <RouterLink to="/authors" class="text-gray-600 hover:text-gray-900">Authors</RouterLink>
+            <RouterLink to="/addAuthor" class="text-gray-600 hover:text-gray-900">Add Author</RouterLink>
+
           </div>
         </div>
       </div>
