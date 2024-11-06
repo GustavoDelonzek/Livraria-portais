@@ -74,6 +74,16 @@ class AuthorController extends Controller
         ], 200);
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $authors = Author::where('name', 'like', "%$query%")->get();
+
+        
+
+        return response()->json(['authors' => $authors]);
+    }
+
     public function destroy($id)
     {
         $author = Author::find($id);

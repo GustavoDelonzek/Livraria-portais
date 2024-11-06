@@ -1,5 +1,6 @@
 <template>
   <div class="container mx-auto p-6">
+    <SearchBar @search="getAuthors" />
     <div class="flex justify-end">
       
       <RouterLink to="/addAuthor" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Adicionar novo autor</RouterLink>
@@ -52,9 +53,13 @@
 </template>
 
 <script>
+import SearchBar from '@/components/SearchBar.vue';
 import axios from 'axios';
 export default {
   name: "Authors",
+  components: {
+    SearchBar
+  },
   data() {
     return {
       authors:Array
@@ -64,10 +69,10 @@ export default {
     this.getAuthors();
   },
   methods: {
-    async getAuthors() {
-      const url = 'http://127.0.0.1:8000/api/authors';
+    async getAuthors(query = '') {
+      let url = 'http://127.0.0.1:8000/api/search/authors';
       try {
-        const response = await axios.get(url);
+        const response = await axios.get(url, {params: {query }});
         this.authors = response.data.authors;
       } catch (error) {
         console.log(error);

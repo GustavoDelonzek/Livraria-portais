@@ -75,6 +75,14 @@ class PublisherController extends Controller
         ], 200);
     }
 
+    public function search(Request $request)
+{
+    $query = $request->input('query');
+    $publishers = Publisher::where('name', 'like', "%$query%")->get();
+
+    return response()->json(['publishers' => $publishers]);
+}
+
     public function destroy($id)
     {
         $publisher = Publisher::find($id);

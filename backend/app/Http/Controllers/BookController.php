@@ -26,7 +26,16 @@ class BookController extends Controller
     {
         $query = $request->input('query');
         $books = Book::where('title', 'like', "%$query%")->get();
-        return response()->json(['books' => $books]);
+
+        $booksWithNames = $books->map(function ($book) {
+            $book->author_name = $book->author->name ?? null;
+            $book->publisher_name = $book->publisher->name ?? null;
+            unset($book->author, $book->publisher);
+
+            return $book;
+        });
+
+        return response()->json(["books" => $booksWithNames]);
     }
 
     public function create(Request $request)
