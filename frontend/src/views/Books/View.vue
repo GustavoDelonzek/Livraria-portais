@@ -22,6 +22,9 @@
           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Publisher
           </th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Stock
+          </th>
 
           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Events
@@ -41,6 +44,9 @@
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
             {{ book.publisher_name }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            <StockModal :bookId="book.id"/>
           </td>
 
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -62,10 +68,13 @@
 <script>
 import axios from 'axios';
 import SearchBar from '@/components/SearchBar.vue';
+import StockModal from '../../components/StockModal.vue'
+
 export default {
   name: "books",
   components: {
     SearchBar,
+    StockModal
   },
   data() {
     return {

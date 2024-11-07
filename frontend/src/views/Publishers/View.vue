@@ -62,6 +62,11 @@
 </template>
 
 <script>
+
+
+
+
+
 import SearchBar from '@/components/SearchBar.vue';
 import axios from 'axios';
 export default {
@@ -76,6 +81,8 @@ export default {
   },
   created() {
     this.getPublishers();
+    
+    initModals();
   },
   methods: {
     async getPublishers(query = '') {

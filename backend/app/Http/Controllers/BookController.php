@@ -72,6 +72,26 @@ class BookController extends Controller
     }
 
 
+    public function updateStock(Request $request, $id)
+    {
+        $book = Book::findOrFail($id);
+
+        $operation = $request->input('operation'); 
+        $quantity = $request->input('quantity');
+
+        if ($quantity <= 0) {
+            return response()->json(['error' => 'A quantidade deve ser maior que zero.'], 400);
+        }
+
+        $result = $book->updateStock($quantity, $operation);
+
+        if ($result === true) {
+            return response()->json(['message' => 'Estoque atualizado com sucesso!']);
+        } else {
+            return response()->json(['error' => $result], 400);
+        }
+    }
+
     public function get_book($id)
     {
         $book = Book::find($id);
