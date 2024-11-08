@@ -4,7 +4,7 @@
         <div class="flex justify-between items-center">
           <a href="/" class="text-xl font-bold text-gray-800">Logo</a>
           <div class="space-x-4">
-            <RouterLink to="/admin/dashboard" class="text-gray-600 hover:text-gray-900">DashboardView</RouterLink>
+            <RouterLink to="/admin/home" class="text-gray-600 hover:text-gray-900">DashboardView</RouterLink>
           </div>
         </div>
       </div>
