@@ -4,8 +4,17 @@
 
         <form class="max-w-md mx-auto" @submit.prevent="submitForm" novalidate>
             <FormInput v-model="book.title" name="title" label="Title" />
-            <FormInput v-model="book.author_id" name="author_id" label="Author ID" type="number" />
-            <FormInput v-model="book.publisher_id" name="publisher_id" label="Publisher ID" type="number" />
+            <label for="author_id" class="block mb-2 text-sm font-medium">Author</label>
+            <select v-model="book.author_id" name="author_id" class="form-select mb-4">
+                <option value="" disabled>Select an author</option>
+                <option v-for="author in authors" :key="author.id" :value="author.id">{{ author.name }}</option>
+            </select>
+            <label for="publisher_id" class="block mb-2 text-sm font-medium">Publisher</label>
+            <select v-model="book.publisher_id" name="publisher_id" class="form-select mb-4">
+                <option value="" disabled>Select a publisher</option>
+                <option  v-for="publisher in publishers" :key="publisher.id" :value="publisher.id">{{ publisher.name }}
+                </option>
+            </select>
             <FormInput v-model="book.published_year" name="published_year" label="Published Year" />
             <FormInput v-model="book.genre" name="genre" label="Genre" />
             <FormInput v-model="book.price" name="price" label="Price" type="number" />
@@ -23,7 +32,7 @@
 <script>
 import FormInput from './FormInput.vue'
 import ErrorDisplay from './ErrorDisplay.vue'
-
+import axios from 'axios';
 export default {
     name: 'BookForm',
     components: {
@@ -31,15 +40,29 @@ export default {
         ErrorDisplay
     },
     props: {
-        initialBook: { type: Object, Required: true },
+        initialBook: { type: Object, required: true },
         submitButtonText: { type: String, default: 'Submit' }
     },
     data() {
         return {
             book: { ...this.initialBook },
-            errors: []
+            errors: [],
+            authors: [],
+            publishers: []
         }
     },
+    async created() {
+    try {
+      const [authorsResponse, publishersResponse] = await Promise.all([
+        axios.get('http://127.0.0.1:8000/api/authors'),
+        axios.get('http://127.0.0.1:8000/api/publishers')
+      ])
+      this.authors = authorsResponse.data.authors
+      this.publishers = publishersResponse.data.publishers
+    } catch (error) {
+      console.error('Error loading authors or publishers:', error)
+    }
+  },
     methods: {
         validateForm() {
             this.errors = []

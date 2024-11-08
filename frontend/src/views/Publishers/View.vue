@@ -2,7 +2,7 @@
   <div class="container mx-auto p-6">
     <SearchBar @search="getPublishers" />
     <div class="flex justify-end">
-      <RouterLink to="/addPublisher" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+      <RouterLink to="/admin/publishers/add" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
         Adicionar nova editora</RouterLink>
     </div>
 

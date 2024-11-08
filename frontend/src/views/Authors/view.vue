@@ -3,7 +3,7 @@
     <SearchBar @search="getAuthors" />
     <div class="flex justify-end">
       
-      <RouterLink to="/addAuthor" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Adicionar novo autor</RouterLink>
+      <RouterLink to="/admin/authors/add" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Adicionar novo autor</RouterLink>
     </div>
     
     <table class="min-w-full bg-white border border-gray-200 my-8 rounded-lg overflow-hidden">

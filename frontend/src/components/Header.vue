@@ -4,16 +4,11 @@
         <div class="flex justify-between items-center">
           <a href="/" class="text-xl font-bold text-gray-800">Logo</a>
           <div class="space-x-4">
-            <RouterLink to="/" class="text-gray-600 hover:text-gray-900">Home</RouterLink>
-            <RouterLink to="/books" class="text-gray-600 hover:text-gray-900">Books</RouterLink>
-            <RouterLink to="/authors" class="text-gray-600 hover:text-gray-900">Authors</RouterLink>
-            <RouterLink to="/publishers" class="text-gray-600 hover:text-gray-900">Publishers</RouterLink>
-
+            <RouterLink to="/admin/dashboard" class="text-gray-600 hover:text-gray-900">DashboardView</RouterLink>
           </div>
         </div>
       </div>
     </nav>
-    <RouterView/>
   </template>
 
   <script>
