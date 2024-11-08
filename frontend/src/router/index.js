@@ -11,6 +11,11 @@ import PublisherView from '../views/Publishers/View.vue'
 import EditPublisherView from '@/views/Publishers/EditPublisherView.vue'
 import AddPublisherView from '@/views/Publishers/AddPublisherView.vue'
 import DashboardView from '@/views/Admin/DashboardView.vue'
+import Login from '@/views/Login/view.vue'
+import Register from '@/views/Register/view.vue'
+
+
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -68,6 +73,16 @@ const router = createRouter({
           path: 'publishers/edit/:id?',
           name: 'editPublisher',
           component: EditPublisherView
+        },
+        {
+          path: '/login',
+          name: 'login',
+          component: Login
+        },
+        {
+          path: '/register',
+          name: 'register',
+          component: Register
         }
       ]
     }

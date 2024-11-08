@@ -1,5 +1,4 @@
 <?php
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\createUserController;
@@ -9,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 
 Route::post('/login',[AuthController::class,'login']);
+Route::post('/logout',[AuthController::class,'logout']);
 Route::post('/register',[createUserController::class,'store']);
 Route::get('books', [BookController::class, 'index']);
 Route::get('/search/books', [BookController::class, 'search']);
