@@ -1,63 +1,59 @@
 <template>
     <div>
         <h2>Registro</h2>
-        <form @submit.prevent="Register">
+        <form @submit.prevent="submit">
             <div>
                 <label for="name">Nome:</label>
-                <input type="text" v-model="name" required>
+                <input type="text" v-model="data.name" required>
             </div>
             <div>
                 <label for="email">Email:</label>
-                <input id="email" v-model="email" type="email" required>
+                <input id="email" v-model="data.email" type="email" required>
             </div>
 
             <div>
                 <label for="password">Senha:</label>
-                <input id="password" v-model="password" type="password" required>
+                <input id="password" v-model="data.password" type="password" required>
             </div>
             <div>
                 <label for="password">Confirme sua senha:</label>
-                <input id="password2" v-model="password" type="password" required>
+                <input id="password_confirmation" v-model="data.password_confirmation" type="password" required>
             </div>
 
             <div>
-                <button type="submit">Entrar</button>
+                <button type="submit">Cadastrar</button>
             </div>
         </form>
     </div>
 </template>
 
-<script>
-import axios from 'axios';
+<script lang="ts">
+import {reactive} from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
-    data() {
-        return {
+    name: "Register",
+    setup() {
+        const data = reactive({
+            name: '',
             email: '',
             password: '',
-        };
-    },
-    methods: {
-        login() {
-            const credentials = {
-                name: this.name,
-                email: this.email,
-                password: this.password,
-                password_confirmation: this.password2,
-
-            };
-            let url = `http://127.0.0.1:8000/api/register`;
-            axios.post(url, credentials)
-                .then((response) => {
-                    // Autenticação bem-sucedida
-                    this.$router.push({ name: 'login' });
-                    
-                })
-                .catch((error) => {
-                    // Autenticação falhou
-                    console.error(error);
-                });
-        },
-    },
-};
+            password_confirmation: ''
+        })
+        const router = useRouter();
+        const submit = async () => {
+            await fetch('http://127.0.0.1:8000/api/register', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            });
+            await router.push('/login');
+        }
+        
+        return {
+            data,
+            submit
+        }
+        }
+    }
 </script>
