@@ -1,60 +1,57 @@
 <template>
-    <div>
-      <h2>Login</h2>
-      <form @submit.prevent="login">
-        <div>
-          <label for="email">Email:</label>
-          <input id="email" v-model="email" type="email" required>
-        </div>
-  
-        <div>
-          <label for="password">Senha:</label>
-          <input id="password" v-model="password" type="password" required>
-        </div>
-  
-        <div>
-          <button type="submit">Entrar</button>
-        </div>
-      </form>
+  <div>
+    <h2>Login</h2>
+    <form @submit.prevent="submit">
       <div>
-        <b-modal id="modal-credenciais-invalidas" title="Credenciais Invalidas" ok-only>
-            <p>{{ mensagemErro }}</p>
-        </b-modal>
+        <label for="email">Email:</label>
+        <input id="email" v-model="data.email" type="email" required>
       </div>
-    </div>
-  </template>
-  
-  <script>
-  import axios from 'axios';
-  
-  export default {
-    data() {
-      return {
-        email: '',
-        password: '',
-      };
-    },
-    methods: {
-      login() {
-        const credentials = {
-          email: this.email,
-          password: this.password,
-        };
-         let url = `http://127.0.0.1:8000/api/login`;
-        axios.post(url, credentials)
-          .then((response) => {
-          if (response.data.code == 200) {
-              this.$router.push({ name: 'adminHome' });
-          } else {
-            this.mensagemErro = 'Credenciais Invalidas';
-            this.$bvModal.show('modal-credenciais-invalidas');
-          }
-          })
-          .catch((error) => {
-            // Autenticação falhou
-            console.error(error);
-          });
-      },
-    },
-  };
-  </script>
+
+      <div>
+        <label for="password">Senha:</label>
+        <input id="password" v-model="data.password" type="password" required>
+      </div>
+
+      <div>
+        <button type="submit">Entrar</button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script lang="ts">
+import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
+
+export default {
+  name: "Login",
+  setup() {
+    const data = reactive({
+      email: '',
+      password: '',
+    })
+    const router = useRouter();
+    const submit = async () => {
+      try {
+        await fetch('http://127.0.0.1:8000/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify(data)
+        });
+        await router.push('/admin/home');
+      } catch (error) {
+        console.error('Error logging in:',JSON.stringify(data), error);
+      }
+    }
+
+    return {
+      data,
+      submit
+    }
+  }
+}
+
+
+
+</script>

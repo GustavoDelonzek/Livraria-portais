@@ -3,22 +3,61 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\ResponseTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
 class AuthController extends Controller
 {
-    
-    public function login(Request $request){
-        $hashedPassword = hash::make($request->password);
-        if(Auth::attempt($request->only('email', 'password'))){
-            return response('Authorized', 200, ['token' => $request->user()->createToken('authToken')->plainTextToken]);
+    public function register(Request $request)
+    {
+        request()->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string'
+        ]);
+
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+        ]);
+        return $user;
+    }
+
+    public function login(Request $request)
+    {
+
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            return response([
+                'message' => 'Invalid credentials'
+            ], Response::HTTP_UNAUTHORIZED);
         }
-        return response('Não autorizado', 403);
+
+        $user = Auth::user();
+        $token = $user->createToken('jwt')->plainTextToken;
+
+        $cookie = cookie('jwt', $token, 60 * 24); // 1 dia
+
+        return response([
+            'message' => 'Success'
+        ])->withCookie($cookie);
     }
-    public function logout(Request $request){
-        $request->user()->currentAccessToken()->delete();
-        return response('Deslogado', 200);
+    public function user()
+    {
+        return Auth::user();
     }
+
+    public function logout(Request $request)
+    {
+        $cookie = \Cookie::forget('jwt');
+
+        return response([
+            'message' => 'Success'
+        ])->withCookie($cookie);
+    }
+
+
 }
