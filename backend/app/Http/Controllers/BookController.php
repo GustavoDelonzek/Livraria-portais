@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use Http;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -48,8 +49,27 @@ class BookController extends Controller
             'genre' => 'required|string',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
-            'description' => 'nullable|string'
+            'description' => 'nullable|string',
+            'image' => 'required|image|mimes:jpeg,png,bmp,webp|max:2048'
         ]);
+
+        $imgBBKey = env('IMGBB_API_KEY');
+        if (!$imgBBKey) {
+            throw new \Exception('IMGBB_API_KEY não está configurada no ambiente.');
+        }
+
+        $response = Http::withOptions(['verify' => false])
+        ->asForm()
+        ->post('https://api.imgbb.com/1/upload', [
+            'key' => env('IMGBB_API_KEY'),
+            'image' => base64_encode(file_get_contents($request->file('image')))
+        ]);
+
+        if ($response->failed()) {
+            return response()->json(['error' => 'Falha no upload da imagem'], 500);
+        }
+
+        $imgUrl = $response->json('data.display_url');
 
         $book = new Book();
         $book->title = $request->title;
@@ -60,8 +80,8 @@ class BookController extends Controller
         $book->price = $request->price;
         $book->stock = $request->stock;
         $book->description = $request->description;
+        $book->img_url = $imgUrl;
         $book->save();
-
 
         $book->load('author', 'publisher');
 
@@ -76,7 +96,7 @@ class BookController extends Controller
     {
         $book = Book::findOrFail($id);
 
-        $operation = $request->input('operation'); 
+        $operation = $request->input('operation');
         $quantity = $request->input('quantity');
 
         if ($quantity <= 0) {

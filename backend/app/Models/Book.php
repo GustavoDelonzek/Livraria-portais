@@ -9,13 +9,13 @@ class Book extends Model
 {
 
     protected $fillable = [
-        'title', 
-        'author_id', 
-        'publisher_id', 
-        'published_year', 
-        'genre', 
-        'price', 
-        'stock', 
+        'title',
+        'author_id',
+        'publisher_id',
+        'published_year',
+        'genre',
+        'price',
+        'stock',
         'description'
     ];
 
@@ -29,6 +29,11 @@ class Book extends Model
         return $this->belongsTo(Publisher::class);
 
 
+    }
+
+    public function genres()
+    {
+        return $this->belongsToMany(Genre::class, 'book_genre');
     }
 
     public function updateStock(int $quantity, string $operation)
@@ -48,7 +53,7 @@ class Book extends Model
         $this->save();
         return true;
     }
-    
+
 
     use HasFactory;
 }

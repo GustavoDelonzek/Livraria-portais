@@ -21,6 +21,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2);
             $table->integer('stock');
             $table->text('description');
+            $table->string(column: 'img_url');
             $table->timestamps();
         
             $table->foreign('author_id')->references('id')->on('authors')->onDelete('cascade');
