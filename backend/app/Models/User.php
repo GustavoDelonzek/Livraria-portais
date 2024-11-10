@@ -33,6 +33,12 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function preferredGenres()
+    {
+        return $this->belongsToMany(Genre::class, 'user_genre_preferences');
+    }
+
+
     /**
      * Get the attributes that should be cast.
      *

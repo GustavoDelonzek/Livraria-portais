@@ -16,7 +16,12 @@
                 </option>
             </select>
             <FormInput v-model="book.published_year" name="published_year" label="Published Year" />
-            <FormInput v-model="book.genre" name="genre" label="Genre" />
+            <label for="genre" class="block mb-2 text-sm font-medium">Genres</label>
+            <select v-model="book.genres" name="genre" class="form-select mb-4" multiple>
+                <option value="" disabled>Select a genre</option>
+
+                <option v-for="genre in genres" :key="genre.id" :value="genre.id">{{ genre.name }}</option>
+            </select>
             <FormInput v-model="book.price" name="price" label="Price" type="number" />
             <FormInput v-model="book.stock" name="stock" label="Stock" type="number" />
             <FormInput v-model="book.description" name="description" label="Description" />
@@ -50,28 +55,31 @@ export default {
             book: { ...this.initialBook },
             errors: [],
             authors: [],
-            publishers: []
+            publishers: [],
+            genres: []
         }
     },
     async created() {
         try {
-            const [authorsResponse, publishersResponse] = await Promise.all([
+            const [authorsResponse, publishersResponse, genresResponse] = await Promise.all([
                 axios.get('http://127.0.0.1:8000/api/authors'),
-                axios.get('http://127.0.0.1:8000/api/publishers')
-            ])
-            this.authors = authorsResponse.data.authors
-            this.publishers = publishersResponse.data.publishers
+                axios.get('http://127.0.0.1:8000/api/publishers'),
+                axios.get('http://127.0.0.1:8000/api/genres')
+            ]);
+            this.authors = authorsResponse.data.authors;
+            this.publishers = publishersResponse.data.publishers;
+            this.genres = genresResponse.data.genres;
         } catch (error) {
-            console.error('Error loading authors or publishers:', error)
+            console.error('Error loading authors, publishers, or genres:', error);
         }
     },
     methods: {
         handleFileUpload(event) {
             this.errors = [];
             const file = event.target.files[0];
-            if (file && file.size > 2 * 1024 * 1024) { 
+            if (file && file.size > 2 * 1024 * 1024) {
                 this.errors.push("Image size must not exceed 2MB.");
-                this.book.image = null; 
+                this.book.image = null;
             } else {
                 this.book.image = file;
             }
@@ -83,7 +91,7 @@ export default {
             if (!this.book.author_id) this.errors.push("Author is required!");
             if (!this.book.publisher_id) this.errors.push("Publisher is required!");
             if (!this.book.published_year) this.errors.push("Published year is required!");
-            if (!this.book.genre) this.errors.push("Genre is required!");
+            if (!this.book.genres.length) this.errors.push("At least one genre is required!");
             if (!this.book.price) this.errors.push("Price is required!");
             if (!this.book.stock) this.errors.push("Stock is required!");
             if (!this.book.image) this.errors.push("Image is required and must be less than 2MB!");
@@ -96,11 +104,15 @@ export default {
                 formData.append('author_id', this.book.author_id);
                 formData.append('publisher_id', this.book.publisher_id);
                 formData.append('published_year', this.book.published_year);
-                formData.append('genre', this.book.genre);
                 formData.append('price', this.book.price);
                 formData.append('stock', this.book.stock);
                 formData.append('description', this.book.description);
                 formData.append('image', this.book.image);
+                
+
+                this.book.genres.forEach(genreId => {
+                    formData.append('genres[]', genreId);
+                });
 
                 this.$emit('submit', formData);
             }

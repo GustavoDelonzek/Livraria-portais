@@ -48,7 +48,6 @@ class GenreSeeder extends Seeder
             'Ciencia'
         ];
 
-        // Criar cada gênero no banco de dados
         foreach ($genres as $genre) {
             Genre::create(['name' => $genre]);
         }

@@ -16,6 +16,11 @@ class Genre extends Model
         return $this->belongsToMany(Book::class, 'book_genre');
     }
 
+    public function users()
+{
+    return $this->belongsToMany(User::class, 'user_genre_preferences');
+}
+
 
     use HasFactory;
 }

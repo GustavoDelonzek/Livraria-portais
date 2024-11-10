@@ -105,6 +105,7 @@
 </template>
 
 <script>
+
 import { onMounted } from 'vue'
 import { 
     initAccordions, 
@@ -133,6 +134,10 @@ onMounted(() => {
     initTabs();
     initTooltips();
 })
+
+export default{
+  name:"SideBar"
+}
 
 </script>
 
