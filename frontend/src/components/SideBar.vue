@@ -195,4 +195,8 @@ export default {
 }
 
 
+export default{
+  name:"SideBar"
+}
+
 </script>

@@ -2,6 +2,7 @@
 <script lang="ts">
 import SideBar from '@/components/SideBar.vue';
 import { onMounted, ref} from 'vue';
+
 import { RouterLink, RouterView } from 'vue-router'
 export default {
   name: 'DashboardView',
@@ -48,6 +49,7 @@ export default {
       <main class="p-4">
         <RouterView />
       </main>
+
     </div>
   </div>
 

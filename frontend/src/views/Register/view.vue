@@ -58,6 +58,11 @@
             data,
             submit
         }
-        }
+
     }
-</script>
+  }
+  </script>
+  
+  <style scoped>
+  </style>
+  
