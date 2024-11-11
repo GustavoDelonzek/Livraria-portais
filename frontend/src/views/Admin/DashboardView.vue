@@ -1,6 +1,6 @@
 
 <script lang="ts">
-import SideBar from '@/components/SideBar.vue'
+import SideBar from '@/components/SideBar.vue';
 import { onMounted, ref} from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 export default {
@@ -45,7 +45,7 @@ export default {
     <div class="flex-1 flex flex-col ml-64">
 
 
-      <main class="p-4 pt-20">
+      <main class="p-4">
         <RouterView />
       </main>
     </div>

@@ -145,6 +145,7 @@
 </template>
 
 <script>
+
 import { onMounted } from 'vue'
 import {
   initAccordions,
@@ -176,6 +177,7 @@ onMounted(() => {
 });
 
 export default {
+  name:"SideBar",
   methods: {
 
     logout: async function () {

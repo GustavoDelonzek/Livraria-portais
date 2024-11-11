@@ -12,16 +12,14 @@ export default {
     BookForm
   },
   methods: {
-    async saveBook(book) {
-      const url = "http://127.0.0.1:8000/api/save_book"
-      try {
-        const response = await axios.post(url, book)
-        if (response.status === 200) {
-          alert(response.data.message)
-        }
-      } catch (error) {
-        console.log(error)
+    async saveBook(formData) {
+      const url = "http://127.0.0.1:8000/api/save_book";
+
+      const response = await axios.post(url, formData);
+      if (response.status === 200) {
+        alert(response.data.message);
       }
+
     }
   }
 }

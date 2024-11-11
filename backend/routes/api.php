@@ -2,6 +2,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\createUserController;
+use App\Http\Controllers\GenreController;
 use App\Http\Controllers\PublisherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,3 +41,5 @@ Route::get('get_publisher/{id}', [PublisherController::class, 'get_publisher']);
 Route::delete('delete_publisher/{id}', [PublisherController::class, 'destroy']);
 Route::post('save_publisher', [PublisherController::class, 'create']);
 Route::post('update_publisher/{id}', [PublisherController::class, 'update']);
+
+Route::get('genres', [GenreController::class, 'index']);

@@ -24,10 +24,10 @@ class BookFactory extends Factory
             'author_id' =>  Author::pluck('id')->random(), 
             'publisher_id' =>  Publisher::pluck('id')->random(), 
             'published_year' => $this->faker->year, 
-            'genre' => $this->faker->word, 
             'price' => $this->faker->randomFloat(2, 10, 100), 
             'stock' => $this->faker->numberBetween(1, 50), 
             'description' => $this->faker->paragraph, 
+            'img_url' => $this->faker->imageUrl(640, 480, 'books', true, 'Faker')
         ];
     }
 }
