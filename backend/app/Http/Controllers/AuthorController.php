@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use Database\Seeders\AuthorSeeder;
+use Http;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
@@ -20,14 +21,36 @@ class AuthorController extends Controller
             'name' => 'required|string',
             'bio' => 'nullable|string',
             'date_of_birth' => 'required|date',
-            'nationality' => 'required|string'
+            'nationality' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,bmp,webp|max:2048'
+            
         ]);
+
+        $imgBBKey = env('IMGBB_API_KEY');
+        if (!$imgBBKey) {
+            throw new \Exception('IMGBB_API_KEY não está configurada no ambiente.');
+        }
+
+        $response = Http::withOptions(['verify' => false])
+            ->asForm()
+            ->post('https://api.imgbb.com/1/upload', [
+                'key' => $imgBBKey,
+                'image' => base64_encode(file_get_contents($request->file('image')))
+            ]);
+
+            if ($response->failed() || !$response->json('data.display_url')) {
+                return response()->json(['error' => 'Falha no upload da imagem ou resposta inválida'], 500);
+            }
+            
+
+        $imgUrl = $response->json('data.display_url');
 
         $author = new Author();
         $author->name = $request->name;
         $author->bio = $request->bio;
         $author->date_of_birth = $request->date_of_birth;
         $author->nationality = $request->nationality;
+        $author->img_url = $imgUrl;
         $author->save();
 
         return response()->json([
@@ -59,8 +82,31 @@ class AuthorController extends Controller
             'name' => 'required|string',
             'bio' => 'nullable|string',
             'date_of_birth' => 'required|date',
-            'nationality' => 'required|string'
+            'nationality' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,bmp,webp|max:2048'
         ]);
+
+        $imgBBKey = env('IMGBB_API_KEY');
+        if (!$imgBBKey) {
+            throw new \Exception('IMGBB_API_KEY não está configurada no ambiente.');
+        }
+
+
+        if ($request->hasFile('image')) {
+            $response = Http::withOptions(['verify' => false])
+                ->asForm()
+                ->post('https://api.imgbb.com/1/upload', [
+                    'key' => $imgBBKey,
+                    'image' => base64_encode(file_get_contents($request->file('image')))
+                ]);
+
+            if ($response->failed()) {
+                return response()->json(['error' => 'Falha no upload da imagem'], 500);
+            }
+
+            $imgUrl = $response->json('data.display_url');
+            $author->img_url = $imgUrl;
+        }
 
         $author->name = $request->name;
         $author->bio = $request->bio;

@@ -15,6 +15,7 @@ import AddPublisherView from '@/views/Publishers/AddPublisherView.vue'
 import DashboardView from '@/views/Admin/DashboardView.vue'
 
 import UserView from '@/views/User/view.vue'
+import ShopView from '@/views/User/ShopView.vue'
 
 import Login from '@/views/Login/view.vue'
 import Register from '@/views/Register/view.vue'
@@ -96,6 +97,11 @@ const router = createRouter({
     path: '/',
     name: 'home',
     component: UserView
+  },
+  {
+    path: '/shop',
+    name: 'shop',
+    component: ShopView
   }
   ]
 }

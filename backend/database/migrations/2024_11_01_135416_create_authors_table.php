@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('bio');
             $table->date('date_of_birth');
             $table->string('nationality');
+            $table->string(column: 'img_url');
             $table->timestamps();
         });
         

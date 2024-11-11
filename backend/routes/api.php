@@ -43,3 +43,6 @@ Route::post('save_publisher', [PublisherController::class, 'create']);
 Route::post('update_publisher/{id}', [PublisherController::class, 'update']);
 
 Route::get('genres', [GenreController::class, 'index']);
+Route::get('genres-by-category', [GenreController::class, 'getGenresByCategory']);
+
+Route::get('new-releases', [BookController::class, 'bookNewRelease']);

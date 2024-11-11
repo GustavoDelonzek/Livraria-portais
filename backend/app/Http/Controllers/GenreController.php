@@ -9,19 +9,26 @@ class GenreController extends Controller
 {
     public function index()
     {
-        // Retorna todos os gêneros
         $genres = Genre::all();
         return response()->json(["genres" => $genres]);
     }
 
+    public function getGenresByCategory()
+    {
+        $genresByCategory = Genre::select('id', 'name', 'category')
+                                 ->orderBy('category')
+                                 ->get()
+                                 ->groupBy('category');
+
+        return response()->json($genresByCategory);
+    }
+
     public function store(Request $request)
     {
-        // Valida os dados recebidos
         $request->validate([
-            'name' => 'required|string|max:255|unique:genres,name', // Gênero único
+            'name' => 'required|string|max:255|unique:genres,name',
         ]);
 
-        // Cria um novo gênero
         $genre = new Genre();
         $genre->name = $request->name;
         $genre->save();
@@ -34,15 +41,12 @@ class GenreController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Encontra o gênero pelo ID
         $genre = Genre::findOrFail($id);
 
-        // Valida os dados recebidos
         $request->validate([
-            'name' => 'required|string|max:255|unique:genres,name,' . $genre->id, // Exclui o gênero atual da validação de unicidade
+            'name' => 'required|string|max:255|unique:genres,name,' . $genre->id,  
         ]);
 
-        // Atualiza o gênero
         $genre->name = $request->name;
         $genre->save();
 
@@ -54,10 +58,8 @@ class GenreController extends Controller
 
     public function destroy($id)
     {
-        // Encontra o gênero pelo ID
         $genre = Genre::find($id);
 
-        // Verifica se o gênero existe
         if ($genre) {
             $genre->delete();
             return response()->json(['message' => 'Genre deleted successfully', 'code' => 200]);

@@ -161,23 +161,9 @@ import {
   initTooltips
 } from 'flowbite'
 
-// initialize components based on data attribute selectors
-onMounted(() => {
-  initAccordions();
-  initCarousels();
-  initCollapses();
-  initDials();
-  initDismisses();
-  initDrawers();
-  initDropdowns();
-  initModals();
-  initPopovers();
-  initTabs();
-  initTooltips();
-});
 
 export default {
-  name:"SideBar",
+  name: "SideBar",
   methods: {
 
     logout: async function () {
@@ -191,12 +177,22 @@ export default {
     }
 
 
+  },
+  mounted() {
+    initAccordions();
+    initCarousels();
+    initCollapses();
+    initDials();
+    initDismisses();
+    initDrawers();
+    initDropdowns();
+    initModals();
+    initPopovers();
+    initTabs();
+    initTooltips();
   }
 }
 
 
-export default{
-  name:"SideBar"
-}
 
 </script>

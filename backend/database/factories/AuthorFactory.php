@@ -21,6 +21,7 @@ class AuthorFactory extends Factory
             'bio' => $this->faker->paragraph,
             'date_of_birth' => $this->faker->date(),
             'nationality' => $this->faker->country,
+            'img_url' => $this->faker->imageUrl(640, 480, 'authors', true, 'Faker')
         ];
     }
 }

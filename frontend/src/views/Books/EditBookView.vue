@@ -28,10 +28,10 @@
           console.log(error)
         }
       },
-      async updateBook(book) {
+      async updateBook(formData) {
         const url = `http://127.0.0.1:8000/api/update_book/${this.$route.params.id}`
         try {
-          const response = await axios.post(url, book)
+          const response = await axios.post(url, formData)
           if (response.status === 200) {
             alert(response.data.message)
           }

@@ -1,10 +1,11 @@
 <template>
-    <AuthorForm v-if="author.id" :initial-author="author" submit-button-text="Update Author" @submit="updateAuthor" />
+  <AuthorForm v-if="author.id" :initial-author="author" submit-button-text="Update Author" @submit="updateAuthor" />
 </template>
 
 <script>
 import axios from 'axios'
 import AuthorForm from '../../components/AuthorForm.vue'
+
 export default {
   name: 'EditAuthor',
   components: {
@@ -28,10 +29,10 @@ export default {
         console.log(error)
       }
     },
-    async updateAuthor(author) {
+    async updateAuthor(formData) {
       const url = `http://127.0.0.1:8000/api/update_author/${this.$route.params.id}`
       try {
-        const response = await axios.post(url, author)
+        const response = await axios.post(url, formData)
         if (response.status === 200) {
           alert(response.data.message)
         }
