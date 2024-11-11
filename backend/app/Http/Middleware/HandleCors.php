@@ -15,9 +15,13 @@ class HandleCors
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        return $next($request)
+        ->header('Access-Control-Allow-Origin', 'http://localhost:5173') // ou o domínio do seu frontend
+        ->header('Access-Control-Allow-Credentials', 'true')
+        ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+        ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     }
-
+    
     protected $headers = [
         'Access-Control-Allow-Origin' => 'http://localhost:5173',
         'Access-Control-Allow-Methods' => 'GET, POST, PUT, DELETE, OPTIONS',

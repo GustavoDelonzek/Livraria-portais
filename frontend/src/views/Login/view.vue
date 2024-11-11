@@ -48,7 +48,7 @@ export default {
     const router = useRouter();
     const submit = async () => {
       try {
-        await fetch('http://127.0.0.1:8000/api/login', {
+        await fetch('http://localhost:8000/api/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
@@ -56,7 +56,7 @@ export default {
         });
         await router.push('/admin/home');
       } catch (error) {
-        console.error('Error logging in:',JSON.stringify(data), error);
+        console.error('Error logging in:', error);
       }
     }
 

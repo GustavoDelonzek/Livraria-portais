@@ -4,7 +4,7 @@ namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
-class HttpKernel extends HttpKernel
+class kernel extends HttpKernel
 {
     /**
      * The application's global HTTP middleware stack.
@@ -36,7 +36,9 @@ class HttpKernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        ],
+            \App\Http\Middleware\HandleCors::class,
+            \App\Http\Middleware\Authenticate::class
+        ],  
 
         'api' => [
             'throttle:api',
