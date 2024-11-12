@@ -45,4 +45,8 @@ Route::post('update_publisher/{id}', [PublisherController::class, 'update']);
 Route::get('genres', [GenreController::class, 'index']);
 Route::get('genres-by-category', [GenreController::class, 'getGenresByCategory']);
 
-Route::get('new-releases', [BookController::class, 'bookNewRelease']);
+Route::get('new_releases', [BookController::class, 'bookNewRelease']);
+Route::get('books_by_genre/{genre}', [BookController::class, 'booksByGenre']);
+Route::get('books_by_category/{category}', [BookController::class, 'booksByCategory']);
+
+

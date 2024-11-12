@@ -19,6 +19,7 @@ import ShopView from '@/views/User/ShopView.vue'
 
 import Login from '@/views/Login/view.vue'
 import Register from '@/views/Register/view.vue'
+import ShopBookView from '@/views/User/ShopBookView.vue'
 
 
 
@@ -102,6 +103,11 @@ const router = createRouter({
     path: '/shop',
     name: 'shop',
     component: ShopView
+  },
+  {
+    path: '/shop/book',
+    name: 'shopBook',
+    component: ShopBookView
   }
   ]
 }

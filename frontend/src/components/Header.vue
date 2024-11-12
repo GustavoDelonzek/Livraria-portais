@@ -1,7 +1,7 @@
 <template>
   <div class="p-5 bg-white text-gray-800 shadow-md  mx-auto flex justify-between items-center">
     <div class="flex items-center space-x-2">
-      <span class="text-2xl  font-bold">Livraria</span>
+      <RouterLink to="/"><span class="text-2xl  font-bold">Livraria</span></RouterLink>
     </div>
     <nav class="flex space-x-8 mx-auto">
       <RouterLink to="/shop" class="text-md font-medium hover:text-gray-500 font-serif">Shop</RouterLink> 

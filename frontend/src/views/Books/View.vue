@@ -4,7 +4,8 @@
 
     <div class="flex justify-end">
 
-      <RouterLink to="/admin/books/add" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+      <RouterLink to="/admin/books/add"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
         Adicionar novo livro</RouterLink>
     </div>
     <table class="min-w-full bg-white border border-gray-200 my-8 rounded-lg overflow-hidden">
@@ -46,7 +47,7 @@
             {{ book.publisher_name }}
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-            <StockModal :bookId="book.id"/>
+            <StockModal :bookId="book.id" />
           </td>
 
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
