@@ -163,6 +163,18 @@ class BookController extends Controller
         return response()->json($book);
     }
 
+
+    public function getAllOfBook($id)
+    {
+        $book = Book::with(['author:id,name,img_url', 'publisher:id,name', 'genres'])->find($id);
+
+        if (!$book) {
+            return response()->json(['message' => 'Livro não encontrado'], 404);
+        }
+
+        return response()->json($book);
+    }
+
     public function bookNewRelease()
     {
         $twoWeeksAgo = Carbon::now()->subWeeks(2);

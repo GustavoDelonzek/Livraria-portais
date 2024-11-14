@@ -20,6 +20,7 @@ import ShopView from '@/views/User/ShopView.vue'
 import Login from '@/views/Login/view.vue'
 import Register from '@/views/Register/view.vue'
 import ShopBookView from '@/views/User/ShopBookView.vue'
+import CartView from '@/views/Purchase/CartView.vue'
 
 
 
@@ -105,9 +106,14 @@ const router = createRouter({
     component: ShopView
   },
   {
-    path: '/shop/book',
+    path: '/shop/book/:id?',
     name: 'shopBook',
     component: ShopBookView
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: CartView
   }
   ]
 }

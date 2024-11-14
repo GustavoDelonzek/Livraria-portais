@@ -9,7 +9,8 @@
       <a href="#" class="text-md font-medium hover:text-gray-500 font-serif">Favorites</a>
       
     </nav>
-    <div>
+    <div class="flex gap-3">
+      <RouterLink to="/cart" class="text-lg  hover:text-gray-500 font-semibold">Carrinho</RouterLink>
       <RouterLink to="/login" class="text-lg  hover:text-gray-500 font-semibold">Login</RouterLink>
     </div>
   </div>

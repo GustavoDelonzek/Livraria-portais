@@ -3,6 +3,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\createUserController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\PublisherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -14,12 +15,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout',[AuthController::class,'logout']);
 });
 
+Route::post('/checkout', [OrdersController::class,'checkout']);
+
 Route::post('register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
 
 Route::get('books', [BookController::class, 'index']);
 Route::get('/search/books', [BookController::class, 'search']);
 Route::get('get_book/{id}', [BookController::class, 'get_book']);
+Route::get('get_all_of_book/{id}', [BookController::class, 'getAllOfBook']);
 Route::delete('delete_book/{id}', [BookController::class, 'destroy']);
 Route::post('save_book', [BookController::class, 'create']);
 Route::post('update_book/{id}', [BookController::class, 'update']);
