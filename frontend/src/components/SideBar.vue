@@ -154,8 +154,8 @@ import {
   initDials,
   initDismisses,
   initDrawers,
-  initDropdowns,
   initModals,
+  initDropdowns,
   initPopovers,
   initTabs,
   initTooltips
@@ -196,9 +196,9 @@ export default {
     initDismisses();
     initDrawers();
     initDropdowns();
-    initModals();
     initPopovers();
     initTabs();
+    initModals();
     initTooltips();
   }
 }

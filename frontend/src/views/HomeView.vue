@@ -5,9 +5,8 @@ import SideBar from '@/components/SideBar.vue';
 
 <template>
   <main>
-    
-    <h1>This is Home page</h1>
-  </main>
+    <!-- Botão para abrir o modal -->
+    </main>
 </template>
 
 

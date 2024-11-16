@@ -13,10 +13,10 @@
                     <p class="text-gray-600 mt-4">Os livros mais vendidos e comentados! Explore as histórias que estão
                         conquistando leitores no mundo inteiro e encontre sua próxima leitura imperdível.</p>
                     <div class="mt-6">
-                        <button
+                        <RouterLink to="/shop"
                             class=" border border-gray-800 text-gray-800 py-2 px-4  hover:bg-gray-800 hover:text-white transition duration-300">
                             COMPRAR AGORA
-                        </button>
+                        </RouterLink>
                     </div>
 
                 </div>
@@ -24,8 +24,9 @@
 
         </section>
         <section>
-            <ContainerHome  :title="'Novos Lançamentos'"
-                :texto="'Aqui estão alguns dos novos lançamentos incríveis que você não pode perder!'" :books="newBooks" />
+            <ContainerHome :title="'Novos Lançamentos'"
+                :texto="'Aqui estão alguns dos novos lançamentos incríveis que você não pode perder!'"
+                :books="newBooks" />
         </section>
 
 
@@ -41,7 +42,7 @@
 
 
         <section>
-         <!--   <ContainerHome :title="'Recomendados Para Você'"
+            <!--   <ContainerHome :title="'Recomendados Para Você'"
                 :texto="'Aqui estão alguns livros que você pode gostar!'" />-->
         </section>
 
@@ -61,10 +62,10 @@
                     Descubra uma seleção especial de livros com descontos imperdíveis. Não perca a chance de adquirir os
                     seus favoritos por preços incríveis.
                 </p>
-                <button
+                <RouterLink to="/shop"
                     class="py-2 px-6 border border-white text-white font-medium  hover:bg-gray-600 hover:text-white transition duration-300">
                     COMPRAR AGORA
-                </button>
+                </RouterLink>
             </article>
             <div class="col-span-3 bg-[url('../assets/Teste-fundo.jpg')]  bg-cover bg-center ">
 
@@ -72,10 +73,10 @@
 
 
         </section>
-        <!--<section>
-            <ContainerHome :title="'Novos Lançamentos'"
-                :texto="'Aqui estão alguns dos novos lançamentos incríveis que você não pode perder!'" />
-        </section>-->
+        <section v-if="genreBooks.length">
+            <ContainerHome :title="`Explore o Gênero Literário ${ genre }!`" :texto="`Talvez seja hora de fugir do óbvio e explorar um novo gênero. Os livros que você procura podem estar em ${ genre }!`"
+                :books="genreBooks" />
+        </section>
 
         <Footer></Footer>
     </main>
@@ -90,7 +91,9 @@ export default {
     name: 'home',
     data() {
         return {
-            newBooks: []
+            newBooks: [],
+            genreBooks: [],
+            genre: ''
         }
     },
     components: {
@@ -98,8 +101,9 @@ export default {
         SwiperAuthors,
         Footer
     },
-    mounted(){
+    mounted() {
         this.getNewReleases();
+        this.getGenres();
     },
     methods: {
         async getNewReleases() {
@@ -110,7 +114,30 @@ export default {
             } catch (error) {
                 console.log(error);
             }
-        }
+        },
+        async filterByGenre(genre) {
+            const url = `http://127.0.0.1:8000/api/books_by_genre/${genre}`;
+            try {
+                const response = await axios.get(url);
+                this.genreBooks = response.data.books;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async getGenres() {
+            const url = 'http://127.0.0.1:8000/api/genres';
+            try {
+                const response = await axios.get(url);
+                this.genres = response.data.genres;
+                if (this.genres.length > 0) {
+                    this.genre = this.genres[Math.floor(Math.random() * this.genres.length)].name;
+                    this.filterByGenre(this.genre);
+                }
+            } catch (error) {
+                console.error('Erro ao buscar gêneros:', error);
+            }
+        },
+
     }
 }
 </script>

@@ -11,6 +11,7 @@
                 :image="book.img_url"
                 :title="book.title"
                 :price="book.price"
+                :id="book.id"
             />
         </div>
     </section>

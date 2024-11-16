@@ -2,7 +2,7 @@
     <main class="flex justify-center">
         <div class="container flex">
 
-            <aside class="flex-shrink-0 w-96 my-6 mr-6 bg-gray-100 rounded-lg p-4">
+            <aside class="flex-shrink-0 w-64 md:w-96 my-6 mr-6 bg-gray-100 rounded-lg p-4">
                 <form class="max-w-md mx-auto my-4">
                     <label for="default-search"
                         class="mb-2 text-sm font-medium text-gray-400 sr-only dark:text-white">Search</label>

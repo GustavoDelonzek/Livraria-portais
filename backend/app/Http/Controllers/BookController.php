@@ -12,7 +12,8 @@ class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::with(['author:id,name', 'publisher:id,name', 'genres:id,name'])->get();
+        $books = Book::with(['author:id,name', 'publisher:id,name', 'genres:id,name', 'reviews'])->get();
+
 
         $booksWithNames = $books->map(function ($book) {
             $book->author_name = $book->author->name ?? null;
@@ -32,7 +33,7 @@ class BookController extends Controller
     {
         $query = $request->input('query');
 
-        $books = Book::with(['author:id,name', 'publisher:id,name', 'genres:id,name'])
+        $books = Book::with(['author:id,name', 'publisher:id,name', 'genres:id,name', 'reviews'])
             ->where('title', 'like', "%$query%")
             ->get();
 
@@ -53,7 +54,7 @@ class BookController extends Controller
     {
         $genreId = Genre::where('name', $genre)->pluck('id')->first();
 
-        $books = Book::with(['author:id,name', 'publisher:id,name', 'genres:id,name'])
+        $books = Book::with(['author:id,name', 'publisher:id,name', 'genres:id,name', 'reviews'])
             ->whereHas('genres', function ($q) use ($genreId) {
                 $q->where('genres.id', $genreId);
             })
@@ -71,7 +72,7 @@ class BookController extends Controller
 
         $genres = Genre::where('category', $category)->pluck('id');
 
-        $books = Book::with(['author:id,name', 'publisher:id,name', 'genres:id,name'])
+        $books = Book::with(['author:id,name', 'publisher:id,name', 'genres:id,name', 'reviews'])
             ->whereHas('genres', function ($query) use ($genres) {
                 $query->whereIn('genre_id', $genres);
             })
@@ -127,7 +128,7 @@ class BookController extends Controller
 
         $book->genres()->attach($request->genres);
 
-        $book->load('author', 'publisher', 'genres');
+        $book->load('author', 'publisher', 'genres', 'reviews');
 
         return response()->json([
             'message' => 'Book created successfully',
@@ -166,7 +167,7 @@ class BookController extends Controller
 
     public function getAllOfBook($id)
     {
-        $book = Book::with(['author:id,name,img_url', 'publisher:id,name', 'genres'])->find($id);
+        $book = Book::with(['author:id,name', 'publisher:id,name', 'genres:id,name', 'reviews'])->find($id);
 
         if (!$book) {
             return response()->json(['message' => 'Livro não encontrado'], 404);
@@ -179,7 +180,7 @@ class BookController extends Controller
     {
         $twoWeeksAgo = Carbon::now()->subWeeks(2);
 
-        $books = Book::with(['author:id,name', 'publisher:id,name', 'genres:id,name'])
+        $books = Book::with(['author:id,name', 'publisher:id,name', 'genres:id,name', 'reviews'])
             ->where('created_at', '>=', $twoWeeksAgo)
             ->orderBy('created_at', 'desc')
             ->get();
@@ -236,7 +237,7 @@ class BookController extends Controller
 
         $book->genres()->sync($request->genres);
 
-        $book->load('author', 'publisher', 'genres');
+        $book->load('author', 'publisher', 'genres', 'reviews');
 
         return response()->json([
             'message' => 'Book updated successfully',

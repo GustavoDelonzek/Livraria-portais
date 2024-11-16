@@ -5,6 +5,8 @@ use App\Http\Controllers\createUserController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\PublisherController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\UserGenreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
@@ -50,9 +52,16 @@ Route::post('update_publisher/{id}', [PublisherController::class, 'update']);
 
 Route::get('genres', [GenreController::class, 'index']);
 Route::get('genres-by-category', [GenreController::class, 'getGenresByCategory']);
+Route::post('/save_user_genres', [UserGenreController::class, 'saveGenres']);
+
 
 Route::get('new_releases', [BookController::class, 'bookNewRelease']);
 Route::get('books_by_genre/{genre}', [BookController::class, 'booksByGenre']);
 Route::get('books_by_category/{category}', [BookController::class, 'booksByCategory']);
 
 
+Route::get('reviews/{book_id}', [ReviewController::class, 'index']);
+Route::get('reviews/{id}', [ReviewController::class, 'show']);
+Route::post('reviews/{book_id}', [ReviewController::class, 'store']);
+Route::put('reviews/{id}', [ReviewController::class, 'update']);
+Route::delete('reviews/{id}', [ReviewController::class, 'destroy']);

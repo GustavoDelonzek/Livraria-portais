@@ -82,7 +82,15 @@ export default {
         };
 
         try {
-          const response = await axios.post('http://127.0.0.1:8000/api/checkout', orderData);
+
+          const token = localStorage.getItem('token');
+
+
+          const response = await axios.post('http://127.0.0.1:8000/api/checkout', orderData, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
 
           if (response.status === 200) {
             alert(response.data.message);
@@ -90,7 +98,7 @@ export default {
             this.cartItems = [];
           }
         } catch (error) {
-          console.error('Erro ao finalizar a compra', error);
+          console.error('Erro ao finalizar a compra', error.response.data);
           alert('Houve um erro ao finalizar a compra. Tente novamente.');
         } finally {
           this.loading = false;

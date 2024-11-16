@@ -8,6 +8,7 @@ use Auth;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class OrdersController extends Controller
 {
@@ -22,24 +23,27 @@ class OrdersController extends Controller
     DB::beginTransaction();
 
     try {
-        // Criação da ordem
+
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if (!$user) {
+            return response()->json(['error' => 'Usuário não autenticado'], 401);
+        }
+
         $order = Order::create([
-            'user_id' => 1, 
+            'user_id' => $user->id, 
             'total' => 0,
             'status' => 'completed',
         ]);
 
         $total = 0;
 
-        // Processando cada item do pedido
         foreach ($request->items as $item) {
             $book = Book::find($item['book_id']);
             
-            // Verifica se o livro existe e tem estoque suficiente
             if ($book && $book->stock >= $item['quantity']) {
                 $total += $book->price * $item['quantity'];
                 
-                // Cria o item do pedido
                 OrderItem::create([
                     'order_id' => $order->id,
                     'book_id' => $book->id,
@@ -47,10 +51,8 @@ class OrdersController extends Controller
                     'price' => $book->price,
                 ]);
                 
-                // Atualiza o estoque
                 $book->decrement('stock', $item['quantity']);
             } else {
-                // Caso o livro não tenha estoque suficiente
                 return response()->json(['error' => 'Estoque insuficiente para o livro: ' . $book->title], 400);
             }
         }

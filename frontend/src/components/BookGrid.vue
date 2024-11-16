@@ -10,12 +10,20 @@
         <p class="text-sm text-gray-600 mb-2">{{ book.author.name }}</p>
         <div class="flex items-center mb-2">
 
-          <span class="text-sm text-gray-600 ml-1">3 estrelas</span>
+          <div class="flex items-center">
+            <StarIcon v-for="i in 5" :key="i" :class="{
+              'text-yellow-400': i <= calculateAverageRating(book.reviews),
+              'text-gray-300': i > calculateAverageRating(book.reviews)
+            }" class="h-4 w-4 fill-current" />
+          </div>
+          <span class="text-sm text-gray-600 ml-1">
+            {{ calculateAverageRating(book.reviews).toFixed(1) }} 
+          </span>
         </div>
         <div class="flex justify-between items-center">
           <span class="font-bold text-lg text-green-700">R${{ book.price }}</span>
 
-          <RouterLink :to="{ name: 'shopBook', params: { id: book.id }}"
+          <RouterLink :to="{ name: 'shopBook', params: { id: book.id } }"
             class="px-3 py-1 bg-green-200 text-gray-800 rounded-full text-sm hover:bg-primary-dark">
             Shop
           </RouterLink>
@@ -26,6 +34,8 @@
 </template>
 
 <script>
+import { StarIcon } from 'lucide-vue-next';
+
 export default {
   name: 'BookGrid',
   props: {
@@ -33,6 +43,17 @@ export default {
       type: Array,
       required: true
     }
+  },
+  components: {
+    StarIcon
+  },
+  methods: {
+    calculateAverageRating(reviews) {
+      if (!reviews || reviews.length === 0) return 0;
+      const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+      return totalRating / reviews.length;
+    }
   }
 }
+
 </script>
