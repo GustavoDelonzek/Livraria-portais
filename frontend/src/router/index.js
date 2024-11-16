@@ -19,8 +19,7 @@ import ShopBookView from '@/views/User/ShopBookView.vue'
 import CartView from '@/views/Purchase/CartView.vue'
 
 import { createRouter, createWebHistory } from 'vue-router'
-import { is } from 'bluebird'
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode"
 
 
 const router = createRouter({
@@ -118,9 +117,9 @@ const router = createRouter({
 }
 )
 
-function isLoggedIn() {
+export function isLoggedIn() {
   const token = localStorage.getItem('token');
-  return token !== null; // Retorna true se o token existir, caso contrário, false
+  return token !== null; 
 }
 
 function getUserRole() {
@@ -130,17 +129,17 @@ function getUserRole() {
   }
 
   try {
-    // Decodifica o token e retorna a role
-    console.log(localStorage.getItem('token'));
     const decodedToken = jwtDecode(token);
-    return decodedToken.role; // Retorna a role ou null se não existir
+    console.log('Token decodificado:', decodedToken);
+    return decodedToken.role; 
   } catch (error) {
     console.error('Erro ao decodificar o token:', error);
     return null;
   }
 }
 
-// Middleware para proteger rotas
+
+
 router.beforeEach((to, from, next) => {
   console.log('Rota solicitada:', to.path, 'Role:', getUserRole());
   if (to.matched.some(record => record.meta.requiresAuth)) {

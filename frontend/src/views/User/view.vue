@@ -24,8 +24,8 @@
 
         </section>
         <section>
-            <ContainerHome :title="'Novos Lançamentos'"
-                :texto="'Aqui estão alguns dos novos lançamentos incríveis que você não pode perder!'" />
+            <ContainerHome  :title="'Novos Lançamentos'"
+                :texto="'Aqui estão alguns dos novos lançamentos incríveis que você não pode perder!'" :books="newBooks" />
         </section>
 
 
@@ -41,8 +41,8 @@
 
 
         <section>
-            <ContainerHome :title="'Recomendados Para Você'"
-                :texto="'Aqui estão alguns livros que você pode gostar!'" />
+         <!--   <ContainerHome :title="'Recomendados Para Você'"
+                :texto="'Aqui estão alguns livros que você pode gostar!'" />-->
         </section>
 
         <section class="p-6 bg-gray-100">
@@ -52,10 +52,9 @@
         </section>
 
         <section class="grid grid-cols-5 min-h-[70vh] ">
-            <article
-                class="col-span-1 md:col-span-2 bg-gray-800 p-6 flex flex-col justify-center items-start ">
+            <article class="col-span-1 md:col-span-2 bg-gray-800 p-6 flex flex-col justify-center items-start ">
                 <h1 class="text-5xl text-white font-serif ">
-                    OS MELHORES PREÇOS 
+                    OS MELHORES PREÇOS
                 </h1>
                 <hr class="w-32 border-t-2 border-white mb-6  mt-3">
                 <p class="text-md text-white text-start mb-6">
@@ -73,10 +72,10 @@
 
 
         </section>
-        <section>
+        <!--<section>
             <ContainerHome :title="'Novos Lançamentos'"
                 :texto="'Aqui estão alguns dos novos lançamentos incríveis que você não pode perder!'" />
-        </section>
+        </section>-->
 
         <Footer></Footer>
     </main>
@@ -86,12 +85,32 @@
 import ContainerHome from '@/components/home/ContainerHome.vue';
 import SwiperAuthors from '@/components/home/SwiperAuthors.vue';
 import Footer from '@/components/Footer.vue';
+import axios from 'axios';
 export default {
     name: 'home',
+    data() {
+        return {
+            newBooks: []
+        }
+    },
     components: {
         ContainerHome,
         SwiperAuthors,
         Footer
+    },
+    mounted(){
+        this.getNewReleases();
+    },
+    methods: {
+        async getNewReleases() {
+            const url = 'http://127.0.0.1:8000/api/new_releases';
+            try {
+                const response = await axios.get(url);
+                this.newBooks = response.data.books;
+            } catch (error) {
+                console.log(error);
+            }
+        }
     }
 }
 </script>

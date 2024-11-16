@@ -9,11 +9,13 @@
         </div>
 
         <div v-if="book.id" class="relative px-4 container mx-auto  -mt-64 z-10">
-            <div class="flex gap-6">
+            <div class="flex flex-col md:flex-row gap-6">
                 <img :src="book.img_url" :alt="book.title"
-                    class="min-w-[12vw] max-w-[16vw] max-h-[40vh] min-h-[40vh] object-cover rounded-lg shadow-xl " />
+                class="w-[15rem] sm:w-[18rem] md:w-[18rem] lg:w-[19rem] 
+           min-h-[18rem] sm:min-h-[20rem] md:min-h-[21rem] lg:min-h-[24rem]
+           max-h-[35rem] object-cover rounded-lg shadow-xl mx-auto md:mx-0" />
 
-                <div class="flex-1 text-white justify-between flex flex-col  pt-4">
+                <div class="flex-1 md:text-white justify-between flex flex-col  pt-4">
                     <div>
                         <h1 class="text-4xl font-serif mb-4">{{ book.title }}</h1>
                         <div class="flex items-center gap-2 mb-4">
@@ -30,7 +32,7 @@
                         </div>
                     </div>
 
-                    <div class="flex max-w-[50vh] gap-4 mb-6">
+                    <div class="flex md:max-w-[40vw] gap-4 mb-6">
                         <button
                             class="flex-1 bg-blue-500 text-white py-3 rounded-full font-medium hover:bg-blue-600 transition-colors">
                             Compre R${{ book.price || '0.00' }}

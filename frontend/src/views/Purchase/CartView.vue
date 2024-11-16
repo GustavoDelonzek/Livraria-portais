@@ -39,6 +39,8 @@
 <script>
 import { RouterLink } from 'vue-router';
 import axios from 'axios';
+import { isLoggedIn } from '@/router/index'
+
 
 export default {
   name: 'CartView',
@@ -68,29 +70,33 @@ export default {
       localStorage.setItem('cart', JSON.stringify(this.cartItems));
     },
     async checkout() {
-      if (this.loading) return; // Evita múltiplos cliques durante o carregamento
-      this.loading = true;
+      if (isLoggedIn()) {
+        if (this.loading) return;
+        this.loading = true;
 
-      const orderData = {
-        items: this.cartItems.map(item => ({
-          book_id: item.id,
-          quantity: item.quantity
-        }))
-      };
+        const orderData = {
+          items: this.cartItems.map(item => ({
+            book_id: item.id,
+            quantity: item.quantity
+          }))
+        };
 
-      try {
-        const response = await axios.post('http://127.0.0.1:8000/api/checkout', orderData);
+        try {
+          const response = await axios.post('http://127.0.0.1:8000/api/checkout', orderData);
 
-        if (response.status === 200) {
-          alert(response.data.message);
-          localStorage.removeItem('cart');
-          this.cartItems = [];
+          if (response.status === 200) {
+            alert(response.data.message);
+            localStorage.removeItem('cart');
+            this.cartItems = [];
+          }
+        } catch (error) {
+          console.error('Erro ao finalizar a compra', error);
+          alert('Houve um erro ao finalizar a compra. Tente novamente.');
+        } finally {
+          this.loading = false;
         }
-      } catch (error) {
-        console.error('Erro ao finalizar a compra', error);
-        alert('Houve um erro ao finalizar a compra. Tente novamente.');
-      } finally {
-        this.loading = false;
+      } else {
+        alert("Vai se logar lerdão!");
       }
     },
   },
