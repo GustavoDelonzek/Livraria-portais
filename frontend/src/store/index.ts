@@ -1,15 +1,57 @@
-import {Commit, createStore} from 'vuex'
+// src/store/index.ts
 
-export default createStore({
+import { createStore } from 'vuex';
+import axios from 'axios';
 
+// Definindo a interface para o estado
+interface State {
+    user: null | { name: string; email: string; role: string };
+}
+
+// Criando o store
+const store = createStore<State>({
     state: {
-        authenticated: false
+        user: null,
     },
     mutations: {
-        SET_AUTH:(state: { authenticated:boolean}, auth: boolean) => state.authenticated = auth
+        setUser (state, userData) {
+            state.user = userData;
+        },
+        logout(state) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('role');
+            state.user = null;
+        },
     },
     actions: {
-        setAuth: ({commit}: { commit: Commit }, authenticated: boolean) => commit('SET_AUTH', authenticated)
+        async login({ commit }, credentials) {
+            try {
+                const response = await axios.post('/api/login', credentials);
+                commit('setUser ', response.data.user);
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('role', response.data.role);
+            } catch (error) {
+                console.error('Login failed:', error);
+                throw error;
+            }
+        },
+        async checkAuth({ commit }) {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    const response = await axios.get('/api/user', {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    commit('setUser ', response.data);
+                } catch (error) {
+                    console.error('Token inválido ou expirado:', error);
+                    commit('logout');
+                }
+            }
+        },
     },
-    modules: {}
-})
+});
+
+export default store;

@@ -17,6 +17,7 @@ watchEffect(() => {
 <template>
   <Header v-if="!isLoginPage && !isRegisterPage" />
   <RouterView />
+  <p v-if="!route.path">Conteúdo do RouterView não está sendo renderizado</p>
 </template>
 
 <style scoped>
