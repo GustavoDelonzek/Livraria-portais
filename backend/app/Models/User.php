@@ -33,7 +33,7 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password',
         'is_admin',
-        'role'
+        'role'  
     ];
 
     public function preferredGenres()

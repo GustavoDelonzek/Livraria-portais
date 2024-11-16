@@ -35,6 +35,7 @@
 
 
 <script lang="ts">
+import { getUserRole } from '@/router';
 import axios from 'axios';
 import { method } from 'bluebird';
 import { reactive } from 'vue';
@@ -61,8 +62,12 @@ export default {
 
                 localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(user));
-
-                this.$router.push('/');
+                const role = getUserRole();
+                if (role === 'admin') {
+                    this.$router.push('/admin/home');
+                  }else{
+                    this.$router.push('/');
+                  }
             } catch (error) {
                 this.errorMessage = 'Email ou senha inválidos.';
             }

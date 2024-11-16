@@ -122,7 +122,7 @@ export function isLoggedIn() {
   return token !== null; 
 }
 
-function getUserRole() {
+export function getUserRole() {
   const token = localStorage.getItem('token');
   if (!token) {
     return null;
@@ -142,24 +142,31 @@ function getUserRole() {
 
 router.beforeEach((to, from, next) => {
   console.log('Rota solicitada:', to.path, 'Role:', getUserRole());
+  
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!isLoggedIn()) {
       console.log('Usuário não autenticado, redirecionando para login');
       next({ path: '/login' });
     } else {
       const role = getUserRole();
-      if (role === 'admin') {
-        console.log('Usuário Administrador autenticado, acesso permitido');
-        next({ path: '/admin/home' });
+      if (to.matched.some(record => record.meta.requiresAdmin)) {
+        if (role === 'admin') {
+          console.log('Usuário Administrador autenticado, acesso permitido');
+          next();
+        } else {
+          console.log('Usuário não é administrador, acesso negado');
+          next({ path: '/' });
+        }
       } else {
         console.log('Usuário autenticado, acesso permitido');
-        next();
+        next(); 
       }
     }
   } else {
-    next();
+    next(); // Permite acesso às rotas públicas
   }
 });
+
 
 
 export default router
