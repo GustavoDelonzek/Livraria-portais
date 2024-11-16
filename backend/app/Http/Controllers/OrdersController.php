@@ -90,4 +90,25 @@ class OrdersController extends Controller
 
         return response()->json(['orders' => $orders]);
     }
+
+
+    public function hasPurchased(Request $request, $bookId)
+{
+    try {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if (!$user) {
+            return response()->json(['error' => 'Usuário não autenticado'], 401);
+        }
+
+        $hasPurchased = OrderItem::whereHas('order', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->where('book_id', $bookId)->exists();
+
+        return response()->json(['hasPurchased' => $hasPurchased]);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Erro ao verificar compra.'], 500);
+    }
+}
+
 }

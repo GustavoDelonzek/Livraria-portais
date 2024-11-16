@@ -167,7 +167,7 @@ class BookController extends Controller
 
     public function getAllOfBook($id)
     {
-        $book = Book::with(['author:id,name', 'publisher:id,name', 'genres:id,name', 'reviews'])->find($id);
+        $book = Book::with(['author:id,name,img_url', 'publisher:id,name', 'genres:id,name', 'reviews'])->find($id);
 
         if (!$book) {
             return response()->json(['message' => 'Livro não encontrado'], 404);

@@ -9,7 +9,7 @@ import PublisherView from '../views/Publishers/View.vue'
 import EditPublisherView from '@/views/Publishers/EditPublisherView.vue'
 import AddPublisherView from '@/views/Publishers/AddPublisherView.vue'
 import DashboardView from '@/views/Admin/DashboardView.vue'
-
+import ContactView from '@/views/Contact/View.vue'
 import UserView from '@/views/User/view.vue'
 import ShopView from '@/views/User/ShopView.vue'
 
@@ -112,6 +112,11 @@ const router = createRouter({
       path: '/cart',
       name: 'cart',
       component: CartView
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: ContactView
     }
   ]
 }

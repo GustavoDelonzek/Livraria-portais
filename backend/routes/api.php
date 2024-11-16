@@ -22,6 +22,7 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 Route::post('/checkout', [OrdersController::class,'checkout']);
+Route::get('/has_purchased/{bookId}', [OrdersController::class, 'hasPurchased']);
 
 
 Route::get('books', [BookController::class, 'index']);
@@ -53,6 +54,8 @@ Route::post('update_publisher/{id}', [PublisherController::class, 'update']);
 Route::get('genres', [GenreController::class, 'index']);
 Route::get('genres-by-category', [GenreController::class, 'getGenresByCategory']);
 Route::post('/save_user_genres', [UserGenreController::class, 'saveGenres']);
+
+
 
 
 Route::get('new_releases', [BookController::class, 'bookNewRelease']);

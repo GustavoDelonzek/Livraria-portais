@@ -19,7 +19,7 @@
                         <h1 class="text-4xl font-serif mb-4">{{ book.title }}</h1>
                         <div class="flex items-center gap-2 mb-4">
 
-                            <img src="https://xsgames.co/randomusers/avatar.php?g=male" alt="Author"
+                            <img :src="book.author.img_url" alt="Author"
                                 class="w-12 h-12 rounded-full" />
 
                             <p class="font-serif">{{ book.author.name }}</p>
@@ -111,12 +111,12 @@
                             class="flex-1 bg-white text-gray-900 py-3 rounded-full font-medium border border-gray-200 hover:bg-gray-50 transition-colors">
                             Adicionar ao Carrinho
                         </button>
-                        <button
+                        <button 
                             class="bg-white text-gray-900 p-3 rounded-full border border-gray-200 hover:bg-gray-50 transition-colors">
                             <Bookmark class="h-6 w-6" />
                         </button>
 
-                        <button @click="openModal"
+                        <button @click="openModal"  v-if="hasPurchased"
                             class="bg-white text-gray-900 p-3 rounded-full border border-gray-200 hover:bg-gray-50 transition-colors"
                             type="button">
                             <MessageSquareText class="h-6 w-6" />
@@ -254,7 +254,8 @@ export default {
             reviews: [],
             rating: '',
             comment: '',
-            currentReviewIndex: 0
+            currentReviewIndex: 0,
+            hasPurchased: false,
 
         }
     },
@@ -357,16 +358,32 @@ export default {
                 this.currentReviewIndex++;
             }
         },
+        async checkIfPurchased() {
+        const url = `http://127.0.0.1:8000/api/has_purchased/${this.$route.params.id}`;
+        const token = localStorage.getItem('token');
+
+        try {
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            this.hasPurchased = response.data.hasPurchased;
+        } catch (error) {
+            console.error('Erro ao verificar se o livro foi comprado:', error);
+        }
+    },
 
     },
     mounted() {
         initModals();
+        this.checkIfPurchased();
     },
     computed: {
         averageRating() {
             if (this.reviews.length === 0) return 0;
             const totalRating = this.reviews.reduce((sum, review) => sum + review.rating, 0);
-            return (totalRating / this.reviews.length).toFixed(1); // Arredondado para 1 casa decimal
+            return (totalRating / this.reviews.length).toFixed(1); 
         }
     }
 }
