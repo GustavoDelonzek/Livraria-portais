@@ -167,14 +167,24 @@ export default {
   methods: {
 
     logout: async function () {
-      {
-        await fetch('http://localhost:8000/api/logout', {
-          headers: { 'Content-Type': 'application/json' },
-          method: 'POST',
-          credentials: 'include'
-        });
-      };
-    }
+  try {
+    const token = localStorage.getItem('token');
+
+    await fetch('http://localhost:8000/api/logout', {
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Adiciona o token no cabeçalho
+      },
+      method: 'POST',
+    });
+
+    localStorage.removeItem('token');
+
+    await this.$router.push('/login'); // Altere a rota conforme necessário
+  } catch (error) {
+    console.error('Error logging out:', error);
+  }
+}
 
 
   },

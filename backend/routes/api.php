@@ -8,17 +8,19 @@ use App\Http\Controllers\PublisherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\AdminController;
 
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('user', [AuthController::class,'user']);
-    Route::post('/logout',[AuthController::class,'logout']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('register',[AuthController::class,'register']);
+Route::middleware('auth:api')->get('/protected', function () {
+    return response()->json(['message' => 'Você está autenticado!']);
 });
-
+Route::middleware(['auth:api', 'admin'])->group(function () {
+    Route::get('/admin/home', [AdminController::class, 'home']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
 Route::post('/checkout', [OrdersController::class,'checkout']);
 
-Route::post('register',[AuthController::class,'register']);
-Route::post('/login',[AuthController::class,'login']);
 
 Route::get('books', [BookController::class, 'index']);
 Route::get('/search/books', [BookController::class, 'search']);

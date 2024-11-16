@@ -3,7 +3,8 @@
     "baseUrl": "./",  // Necessário para que "paths" funcione
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["vue"]
   },
   "exclude": ["node_modules", "dist"]
 }

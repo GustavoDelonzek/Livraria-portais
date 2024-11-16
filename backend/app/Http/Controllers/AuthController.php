@@ -9,6 +9,8 @@ use Illuminate\Http\ResponseTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 class AuthController extends Controller
 {
     public function register(Request $request)
@@ -29,34 +31,40 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-
-        if (!Auth::attempt($request->only('email', 'password'))) {
-            return response([
-                'message' => 'Invalid credentials'
-            ], Response::HTTP_UNAUTHORIZED);
+        // Validação da entrada
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+    
+        // Credenciais fornecidas
+        $credentials = $request->only('email', 'password');
+    
+        try {
+            // Tentar gerar o token JWT com base nas credenciais
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return response()->json(['message' => 'Credenciais inválidas'], 401);
+            }
+        } catch (JWTException $e) {
+            // Retornar erro caso haja problema ao gerar o token
+            return response()->json(['message' => 'Não foi possível criar o token'], 500);
         }
-
+    
+        // Retornar o token JWT junto com os dados do usuário
         $user = Auth::user();
-        $token = $user->createToken('jwt')->plainTextToken;
-
-        $cookie = cookie('jwt', $token, 60 * 24, '/', null, true, true); // 1 dia
-
-        return response([
-            'message' => 'Success'
-        ])->withCookie($cookie);
-    }
-    public function user()
-    {
-        return Auth::user();
+    
+        return response()->json([
+            'user' => $user,
+            'token' => $token,
+            'role' => $user->role, // Retorna o papel do usuário
+        ], 200);
     }
 
     public function logout(Request $request)
     {
-        $cookie = \Cookie::forget('jwt');
+        JWTAuth::invalidate(JWTAuth::getToken());
 
-        return response([
-            'message' => 'Success'
-        ])->withCookie($cookie);
+        return response()->json(['message' => 'Logout realizado com sucesso']);
     }
 
 
