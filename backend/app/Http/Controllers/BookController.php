@@ -136,6 +136,18 @@ class BookController extends Controller
         ], 200);
     }
 
+    public function booksByAuthor($authorId)
+    {
+        $books = Book::with(['author', 'publisher:id,name', 'genres:id,name'])
+            ->where('author_id', $authorId)
+            ->get();
+
+        foreach ($books as $book) {
+            $book->genres->each->makeHidden('pivot');
+        }
+
+        return response()->json(['books' => $books]);
+    }
 
     public function updateStock(Request $request, $id)
     {

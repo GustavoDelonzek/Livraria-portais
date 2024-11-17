@@ -23,6 +23,7 @@ Route::middleware(['auth:api', 'admin'])->group(function () {
 });
 Route::post('/checkout', [OrdersController::class,'checkout']);
 Route::get('/has_purchased/{bookId}', [OrdersController::class, 'hasPurchased']);
+Route::get('/orders', [OrdersController::class, 'userOrders']);
 
 
 Route::get('books', [BookController::class, 'index']);
@@ -42,6 +43,7 @@ Route::get('get_author/{id}', [AuthorController::class, 'get_author']);
 Route::delete('delete_author/{id}', [AuthorController::class, 'destroy']);
 Route::post('save_author', [AuthorController::class, 'create']);
 Route::post('update_author/{id}', [AuthorController::class, 'update']);
+Route::get('/books/author/{authorId}', [BookController::class, 'booksByAuthor']);
 
 
 Route::get('publishers', [PublisherController::class, 'index']);
@@ -54,6 +56,7 @@ Route::post('update_publisher/{id}', [PublisherController::class, 'update']);
 Route::get('genres', [GenreController::class, 'index']);
 Route::get('genres-by-category', [GenreController::class, 'getGenresByCategory']);
 Route::post('/save_user_genres', [UserGenreController::class, 'saveGenres']);
+Route::get('/user_genres/{userId}', [UserGenreController::class, 'getUserGenres']);
 
 
 

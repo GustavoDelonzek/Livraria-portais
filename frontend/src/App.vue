@@ -4,6 +4,9 @@ import { ref, watchEffect } from 'vue'
 import Header from '@/components/Header.vue'
 import { RouterView } from 'vue-router'
 
+
+
+
 const route = useRoute()
 const isLoginPage = ref(false)
 const isRegisterPage = ref(false)

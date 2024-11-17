@@ -13,6 +13,8 @@ import ContactView from '@/views/Contact/View.vue'
 import UserView from '@/views/User/view.vue'
 import ShopView from '@/views/User/ShopView.vue'
 
+import AuthorView from '@/views/Authors/Author/View.vue'
+
 import Login from '@/views/Login/view.vue'
 import Register from '@/views/Register/view.vue'
 import ShopBookView from '@/views/User/ShopBookView.vue'
@@ -20,6 +22,8 @@ import CartView from '@/views/Purchase/CartView.vue'
 
 import { createRouter, createWebHistory } from 'vue-router'
 import { jwtDecode } from "jwt-decode"
+import FavoritesView from '@/views/User/FavoritesView.vue'
+import MyPurchasesView from '@/views/User/MyPurchasesView.vue'
 
 
 const router = createRouter({
@@ -117,10 +121,50 @@ const router = createRouter({
       path: '/contact',
       name: 'contact',
       component: ContactView
+    },
+    {
+      path: '/favorites',
+      name: 'favorites',
+      component: FavoritesView
+    },
+    {
+      path: '/author/:id?',
+      name: 'author',
+      component: AuthorView
+    },
+    {
+      path: '/my-purchases',
+      name: 'myPurchases',
+      component: MyPurchasesView
     }
-  ]
-}
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    // Sempre que a navegação for feita, rolar para o topo
+    return { top: 0 };
+  },
+},
+
 )
+
+export function getUserInfo() {
+  const user = localStorage.getItem('user'); 
+  
+  if (!user) {
+    return null;
+  }
+
+  try {
+    const parsedUser = JSON.parse(user);
+    return {
+      email: parsedUser.email || null,
+      name: parsedUser.name || null,
+    };
+  } catch (error) {
+    console.error('Erro ao recuperar informações do usuário:', error);
+    return null; 
+  }
+}
+
 
 export function isLoggedIn() {
   const token = localStorage.getItem('token');

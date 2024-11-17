@@ -5,7 +5,7 @@
     <div v-if="cartItems.length === 0" class="text-center py-10 bg-gray-100 rounded-lg shadow-md">
       <p class="text-lg text-gray-600">Seu carrinho está vazio.</p>
       <RouterLink to="/shop"
-        class="mt-4 inline-block px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+        class="mt-4 inline-block px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-blue-600 transition">
         Voltar à loja
       </RouterLink>
     </div>
@@ -13,22 +13,33 @@
     <div v-else>
       <ul class="divide-y divide-gray-200">
         <li v-for="item in cartItems" :key="item.id" class="py-4 flex justify-between items-center">
-          <div>
-            <h3 class="text-lg font-semibold text-gray-800">{{ item.title }}</h3>
-            <p class="text-sm text-gray-500">Preço: R$ {{ item.price }}</p>
-            <p class="text-sm text-gray-500">Quantidade: {{ item.quantity }}</p>
+          <div class="flex items-center space-x-4">
+            <img :src="item.img_url" alt="Capa do livro" class="h-24 w-16 object-cover rounded-md">
+            <div>
+              <h3 class="text-lg font-semibold text-gray-800">{{ item.title }}</h3>
+              <p class="text-sm text-gray-500">Preço: R$ {{ item.price }}</p>
+            </div>
           </div>
-          <button @click="removeFromCart(item.id)"
-            class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
-            Remover
-          </button>
+          <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-2">
+              <button @click="decreaseQuantity(item)" class="px-2 py-1 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition">
+                -
+              </button>
+              <span class="text-lg font-semibold text-gray-800">{{ item.quantity }}</span>
+              <button @click="increaseQuantity(item)" class="px-2 py-1 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition">
+                +
+              </button>
+            </div>
+            <button @click="removeFromCart(item.id)" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+              Remover
+            </button>
+          </div>
         </li>
       </ul>
 
       <div class="mt-8 p-6 bg-gray-100 rounded-lg shadow-md">
         <p class="text-xl font-semibold text-gray-800">Total: R$ {{ cartTotal.toFixed(2) }}</p>
-        <button @click="checkout"
-          class="mt-4 px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">
+        <button @click="checkout" class="mt-4 px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">
           Finalizar Compra
         </button>
       </div>
@@ -39,14 +50,14 @@
 <script>
 import { RouterLink } from 'vue-router';
 import axios from 'axios';
-import { isLoggedIn } from '@/router/index'
-
+import { isLoggedIn } from '@/router/index';
 
 export default {
   name: 'CartView',
   data() {
     return {
       cartItems: [],
+      loading: false
     };
   },
   computed: {
@@ -69,6 +80,16 @@ export default {
     updateCart() {
       localStorage.setItem('cart', JSON.stringify(this.cartItems));
     },
+    increaseQuantity(item) {
+      item.quantity += 1;
+      this.updateCart();
+    },
+    decreaseQuantity(item) {
+      if (item.quantity > 1) {
+        item.quantity -= 1;
+        this.updateCart();
+      }
+    },
     async checkout() {
       if (isLoggedIn()) {
         if (this.loading) return;
@@ -82,10 +103,7 @@ export default {
         };
 
         try {
-
           const token = localStorage.getItem('token');
-
-
           const response = await axios.post('http://127.0.0.1:8000/api/checkout', orderData, {
             headers: {
               Authorization: `Bearer ${token}`
@@ -104,10 +122,12 @@ export default {
           this.loading = false;
         }
       } else {
-        alert("Vai se logar lerdão!");
+        alert("Você precisa estar logado para finalizar a compra.");
       }
     },
   },
 };
-
 </script>
+
+<style scoped>
+</style>

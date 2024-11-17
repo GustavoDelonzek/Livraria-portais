@@ -23,4 +23,16 @@ class UserGenreController extends Controller
 
         return response()->json(['message' => 'Gêneros salvos com sucesso']);
     }
+
+    public function getUserGenres($userId)
+    {
+        $userGenres = UserGenre::where('user_id', $userId)
+            ->with('genre') 
+            ->get()
+            ->pluck('genre'); 
+
+        return response()->json([
+            'genres' => $userGenres,
+        ]);
+    }
 }

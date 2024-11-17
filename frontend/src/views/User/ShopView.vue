@@ -75,6 +75,7 @@ export default {
         return {
             genresByCategory: {},
             filteredBooks: [],
+            selectedGenres: [],
         }
     },
     created() {
@@ -92,13 +93,7 @@ export default {
             }
         },
         async getForYou() {
-            const url = 'http://127.0.0.1:8000/api/for_you';
-            try {
-                const response = await axios.get(url);
-                this.filteredBooks = response.data.books;
-            } catch (error) {
-                console.log(error);
-            }
+           this.checkUserGenres()
         },
         async getNewReleases() {
             const url = 'http://127.0.0.1:8000/api/new_releases';
@@ -128,6 +123,60 @@ export default {
             }
 
 
+        },
+        async checkUserGenres() {
+            const user = localStorage.getItem('user');
+            const parsedUser = JSON.parse(user);
+            if (parsedUser) {
+                try {
+                    const response = await axios.get(`http://127.0.0.1:8000/api/user_genres/${parsedUser.id}`);
+
+                    if (response.data.genres.length > 0) {
+                        this.selectedGenres = response.data.genres;
+                        this.filterByGenres(this.selectedGenres);
+                    } else {
+                        this.showModal = true;
+                    }
+                } catch (error) {
+                    console.error('Erro ao verificar gêneros do usuário:', error);
+                }
+            }
+        },
+        async filterByGenres(genres) {
+            this.isLoadingFilter = true;
+            const allBooks = [];
+            console.log(genres);
+
+            try {
+                const requests = genres.map(genre => {
+                    const url = `http://127.0.0.1:8000/api/books_by_genre/${genre.name}`;
+                    return axios.get(url).catch(error => {
+                        console.error(`Erro ao fazer requisição para o gênero ${genre.name}:`, error);
+                        return null;
+                    });
+                });
+
+                const responses = await Promise.all(requests);
+
+                responses.forEach(response => {
+                    if (response.data.books) {
+                        const books = response.data.books.filter(book => {
+                            return this.book ? book.id !== this.book.id : true;
+                        });
+                        allBooks.push(...books);
+                    } else {
+                        console.error('Resposta inesperada ou sem livros:', response);
+                    }
+                });
+
+                const uniqueBooks = Array.from(new Map(allBooks.map(book => [book.id, book])).values());
+
+                this.filteredBooks = uniqueBooks.slice(0, 4);
+            } catch (error) {
+                console.error('Erro ao buscar livros por gêneros:', error);
+            } finally {
+                this.isLoadingFilter = false;
+            }
         }
     }
 }

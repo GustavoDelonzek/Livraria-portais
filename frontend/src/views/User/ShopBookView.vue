@@ -19,8 +19,7 @@
                         <h1 class="text-4xl font-serif mb-4">{{ book.title }}</h1>
                         <div class="flex items-center gap-2 mb-4">
 
-                            <img :src="book.author.img_url" alt="Author"
-                                class="w-12 h-12 rounded-full" />
+                            <img :src="book.author.img_url" alt="Author" class="w-12 h-12 rounded-full" />
 
                             <p class="font-serif">{{ book.author.name }}</p>
 
@@ -48,7 +47,8 @@
                                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                         <div
                                             class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Todas as {{ reviews.length }}
+                                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Todas as {{
+                                                reviews.length }}
                                                 avaliações</h3>
                                             <button @click="closeFirstModal"
                                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
@@ -66,7 +66,7 @@
                                                 <div v-if="reviews[currentReviewIndex]">
                                                     <p class="font-medium text-gray-800 text-lg">{{
                                                         reviews[currentReviewIndex].user.name
-                                                        }}</p>
+                                                    }}</p>
                                                     <div class="flex items-center mt-2">
                                                         <StarIcon v-for="n in 5" :key="n" :class="{
                                                             'text-yellow-400 fill-current': n <= reviews[currentReviewIndex].rating,
@@ -111,12 +111,16 @@
                             class="flex-1 bg-white text-gray-900 py-3 rounded-full font-medium border border-gray-200 hover:bg-gray-50 transition-colors">
                             Adicionar ao Carrinho
                         </button>
-                        <button 
+
+
+                        <button @click="toggleBookmark(book)"
                             class="bg-white text-gray-900 p-3 rounded-full border border-gray-200 hover:bg-gray-50 transition-colors">
-                            <Bookmark class="h-6 w-6" />
+                            <Bookmark v-if="!isBookmarked(book)" class="h-6 w-6" />
+                            <BookmarkCheck v-else></BookmarkCheck>
                         </button>
 
-                        <button @click="openModal"  v-if="hasPurchased"
+
+                        <button @click="openModal" v-if="hasPurchased"
                             class="bg-white text-gray-900 p-3 rounded-full border border-gray-200 hover:bg-gray-50 transition-colors"
                             type="button">
                             <MessageSquareText class="h-6 w-6" />
@@ -180,17 +184,10 @@
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
-
                 </div>
             </div>
-
-            <div class=" grid grid-cols-3 mt-8 gap-6 mb-4">
-
-
+            <div class=" grid grid-cols-3 mt-8 gap-6  py-4">
                 <div class="mr-12">
                     <h2 class="text-xl font-bold mb-4 ">Sobre</h2>
                     <p class="text-gray-600 text-sm text-justify leading-relaxed">
@@ -203,25 +200,35 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-span-2">
-
+                <div class="col-span-2 min-h-[250px]">
                     <h2 class="text-xl font-bold text-gray-900 mb-4">Você também pode gostar</h2>
-                    <div class="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4">
-                        <div v-for="i in 7" :key="i" class="flex-shrink-0">
-                            <img src="https://m.media-amazon.com/images/I/41RBd2DvmgL._SY445_SX342_.jpg"
-                                class="w-[180px] h-[250px] rounded-lg shadow-md" alt="Related book cover" />
-                            <p class="mt-2 text-sm font-medium text-gray-900 truncate max-w-[180px]">Senhor dos aneis
-                            </p>
-                            <p class="text-sm text-blue-500">$ 9.45</p>
-                        </div>
+                    <div v-if="isLoadingFilter" class="flex justify-center items-center py-20">
+                        <svg class="animate-spin h-6 w-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C4.477 0 0 4.477 0 12h4z"></path>
+                        </svg>
                     </div>
+                    <div v-else>
+                        <div v-if="filteredBooks.length > 0" class="flex gap-3 overflow-x-auto pb-4 -mx-4 px-4">
+                            <div v-for="book in filteredBooks" :key="book.id" class="flex-shrink-0">
+                                <button @click="navigateToBookDetail(book.id)">
+                                    <img :src="book.img_url" class="w-[180px] h-[250px] rounded-lg shadow-md"
+                                        :alt="book.title" />
+                                    <p class="mt-2 text-sm font-medium text-gray-900 truncate max-w-[180px]">{{
+                                        book.title }}</p>
+                                    <p class="text-sm text-blue-500">R$ {{ book.price }}</p>
+                                </button>
 
+                            </div>
+                        </div>
+                        <div v-else class="text-gray-500">Nenhuma recomendação disponível.</div>
+                    </div>
                 </div>
             </div>
-
-
         </div>
-
     </div>
     <Footer></Footer>
 
@@ -232,8 +239,12 @@
 import { initModals } from 'flowbite';
 import axios from 'axios';
 import Footer from '@/components/Footer.vue';
-import { HeartIcon, StarIcon, ArrowLeft, Search, Bookmark, MessageSquareText } from 'lucide-vue-next';
+import { HeartIcon, StarIcon, ArrowLeft, Search, Bookmark, MessageSquareText, BookmarkCheck } from 'lucide-vue-next';
 import { onMounted } from 'vue';
+import { props } from 'bluebird';
+import { RouterLink } from 'vue-router';
+import { useToast } from "vue-toastification";
+
 
 export default {
     name: "ShopView",
@@ -244,8 +255,17 @@ export default {
         ArrowLeft,
         Search,
         Bookmark,
-        MessageSquareText
+        MessageSquareText,
+        BookmarkCheck
     },
+    setup() {
+        const toast = useToast();
+        
+        return {
+            toast
+        }
+    }
+    ,
     data() {
         return {
             book: {},
@@ -256,12 +276,28 @@ export default {
             comment: '',
             currentReviewIndex: 0,
             hasPurchased: false,
-
+            filteredBooks: [],
+            isLoadingFilter: true,
+            bookmarks: JSON.parse(localStorage.getItem('bookmarks')) || []
         }
     },
-    created() {
-        this.getBookById()
+    async created() {
+        await this.getBookById();
+        if (this.book && this.book.genres && this.book.genres.length > 0) {
+            await this.filterByGenres(this.book.genres);
+        }
+    },
+    watch: {
 
+        '$route.params.id': async function (newId) {
+            await this.getBookById(newId);
+
+            this.isLoadingFilter = true;
+            await this.checkIfPurchased();
+            if (this.book && this.book.genres && this.book.genres.length > 0) {
+                await this.filterByGenres(this.book.genres);
+            }
+        }
     },
     methods: {
         async getBookById() {
@@ -272,10 +308,34 @@ export default {
                 if (this.book.id) {
                     await this.getReviews();
                 }
+
             } catch (error) {
                 console.log(error)
             }
         },
+        async filterByGenres(genres) {
+            this.isLoadingFilter = true;
+            const allBooks = [];
+
+            for (const genre of genres) {
+                const url = `http://127.0.0.1:8000/api/books_by_genre/${genre.name}`;
+                try {
+                    const response = await axios.get(url);
+                    const books = response.data.books.filter(book => book.id !== this.book.id);
+                    allBooks.push(...books);
+                } catch (error) {
+                    console.log(`Erro ao buscar livros para o gênero ${genre.name}:`, error);
+                }
+            }
+
+            const uniqueBooks = Array.from(
+                new Map(allBooks.map(book => [book.id, book])).values()
+            );
+
+            this.filteredBooks = uniqueBooks.slice(0, 10);
+            this.isLoadingFilter = false;
+        },
+
         addToCart(book) {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             const existingBook = cart.find(item => item.id === book.id);
@@ -290,7 +350,7 @@ export default {
             }
 
             localStorage.setItem('cart', JSON.stringify(cart));
-            alert(`${book.title} foi adicionado ao carrinho!`);
+            this.toast.success(`Adicionado ao carrinho!`);
         },
         openModal() {
             this.isModalOpen = true;
@@ -320,17 +380,17 @@ export default {
                     }
                 });
                 if (response.status === 201) {
-                    alert('Review submitted successfully!');
+                    this.toast.success('Review submitted successfully!');
                     this.resetForm();
                     this.closeModal();
                 }
             } catch (error) {
                 if (error.response.status === 403) {
-                    alert('Você já tem um review para este livro!');
+                    this.toast.error('Você já tem um review para este livro!');
                 } else if (error.response.status === 401) {
-                    alert('Usuário não autenticado!');
+                    this.toast.error('Usuário não autenticado!');
                 } else {
-                    alert('Ocorreu um erro desconhecido ao enviar o comentário.');
+                    this.toast.error('Ocorreu um erro desconhecido ao enviar o comentário.');
                 }
             }
         },
@@ -359,20 +419,41 @@ export default {
             }
         },
         async checkIfPurchased() {
-        const url = `http://127.0.0.1:8000/api/has_purchased/${this.$route.params.id}`;
-        const token = localStorage.getItem('token');
+            const url = `http://127.0.0.1:8000/api/has_purchased/${this.$route.params.id}`;
+            const token = localStorage.getItem('token');
 
-        try {
-            const response = await axios.get(url, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            this.hasPurchased = response.data.hasPurchased;
-        } catch (error) {
-            console.error('Erro ao verificar se o livro foi comprado:', error);
-        }
-    },
+            try {
+                const response = await axios.get(url, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                this.hasPurchased = response.data.hasPurchased;
+            } catch (error) {
+                console.error('Erro ao verificar se o livro foi comprado:', error);
+            }
+        },
+        navigateToBookDetail(bookId) {
+            this.$router.push({ name: 'shopBook', params: { id: bookId } });
+
+
+        }, toggleBookmark(book) {
+            const existingBookmark = this.bookmarks.find(item => item.id === book.id);
+
+            if (existingBookmark) {
+                this.bookmarks = this.bookmarks.filter(item => item.id !== book.id);
+            } else {
+                this.bookmarks.push(book);
+            }
+
+            localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
+
+            this.toast.info(`${existingBookmark ? 'Removido' : 'Adicionado'} aos favoritos!`);
+        },
+
+        isBookmarked(book) {
+            return this.bookmarks.some(item => item.id === book.id);
+        },
 
     },
     mounted() {
@@ -383,7 +464,7 @@ export default {
         averageRating() {
             if (this.reviews.length === 0) return 0;
             const totalRating = this.reviews.reduce((sum, review) => sum + review.rating, 0);
-            return (totalRating / this.reviews.length).toFixed(1); 
+            return (totalRating / this.reviews.length).toFixed(1);
         }
     }
 }
