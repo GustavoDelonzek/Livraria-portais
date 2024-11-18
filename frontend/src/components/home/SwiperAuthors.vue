@@ -18,9 +18,9 @@
         }" :modules="modules" class="mySwiper">
                 <swiper-slide v-for="(author, index) in authors.slice(0, 8)" :key="index">
                         <router-link :to="`/author/${author.id}`" class="block text-center">
-                                <img class="rounded-full h-48 w-48 object-cover mb-4" :src="author.img_url"
+                                <img class="rounded-full hover:border-[#31629e] hover:border-4 hover:shadow-[#31629e] hover:shadow-md h-48 w-48 object-cover mb-4" :src="author.img_url"
                                         alt="Imagem do Autor" />
-                                <p>{{ author.name }}</p>
+                                <p class="text-[#466149] font-bold text-md">{{ author.name }}</p>
                         </router-link>
                 </swiper-slide>
 
@@ -75,6 +75,7 @@ export default {
 .swiper {
         width: 100%;
         min-height: 40vh;
+
 }
 
 .swiper-slide {
@@ -85,5 +86,6 @@ export default {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        
 }
 </style>

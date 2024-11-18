@@ -2,13 +2,13 @@
     <main>
         <!-- Verificação de Gêneros -->
         <div v-if="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div class="bg-white p-6 rounded-xl w-96">
-                <h3 class="text-lg font-bold text-[#002D74] mb-4">Selecione seus Gêneros Preferidos</h3>
+            <div class="bg-[#fdffe5] p-6 rounded-xl w-96">
+                <h3 class="text-xl text-center font-bold font-serif text-[#eb8a12] mb-4">Selecione seus Gêneros Preferidos</h3>
 
-                <div class="flex flex-wrap gap-3 mb-4">
+                <div class="flex justify-center flex-wrap gap-3 mb-4">
                     <button v-for="genre in genres" :key="genre.id" :class="{
-                        'px-3 py-1 bg-gray-200 text-gray-600 rounded-full text-sm': !selectedGenres.includes(genre.id),
-                        'px-3 py-1 bg-blue-600 text-white rounded-full text-sm': selectedGenres.includes(genre.id)
+                        'px-3 py-1 bg-[#ffdfb8] text-[#eb8a12] rounded-full text-sm': !selectedGenres.includes(genre.id),
+                        'px-3 py-1 bg-[#f0b165] text-white rounded-full text-sm': selectedGenres.includes(genre.id)
                     }" @click="toggleGenre(genre.id)" type="button">
                         {{ genre.name }}
                     </button>
@@ -16,9 +16,9 @@
 
                 <div class="flex justify-end mt-4">
                     <button @click="closeModal"
-                        class="text-[#002D74] py-2 px-4 hover:bg-gray-200 rounded-xl">Fechar</button>
+                        class="rounded-lg border border-[#EA907A] text-[#EA907A] py-1 px-2 hover:bg-[#EA907A] hover:text-white transition duration-300">Fechar</button>
                     <button @click="saveGenres"
-                        class="ml-4 bg-[#002D74] text-white py-2 px-4 rounded-xl">Salvar</button>
+                        class="ml-4 rounded-lg border border-[#86AB89] text-[#86AB89] py-1 px-2 hover:bg-[#86AB89] hover:text-white transition duration-300">Salvar</button>
                 </div>
             </div>
         </div>
@@ -62,15 +62,15 @@
         </div>
 
         <section class="p-6 bg-[#BFD8AF]">
-            <h1 class="text-3xl font-serif text-center text-gray-800 mt-2">AUTORES</h1>
+            <h1 class="text-3xl font-serif text-center text-[#31629e] mt-2">AUTORES</h1>
 
-            <hr class="w-16 border-t-2 border-gray-800 mb-10 mx-auto mt-3">
+            <hr class="w-16 border-t-2 border-[#31629e] mb-10 mx-auto mt-3">
 
             <SwiperAuthors></SwiperAuthors>
         </section>
 
-        <section class="py-3">
-            <ContainerHome v-if="filteredBooks" :title="'Recomendados Para Você'"
+        <section v-if="filteredBooks.length > 0" class="py-3">
+            <ContainerHome  :title="'Recomendados Para Você'"
                 :texto="'Aqui estão alguns livros que você pode gostar!'" :books="filteredBooks" />
         </section>
 
@@ -108,6 +108,7 @@ import ContainerHome from '@/components/home/ContainerHome.vue';
 import SwiperAuthors from '@/components/home/SwiperAuthors.vue';
 import Footer from '@/components/Footer.vue';
 import axios from 'axios';
+import { isLoggedIn } from '@/router';
 
 export default {
     name: 'home',
@@ -131,7 +132,10 @@ export default {
         this.getNewReleases();
         this.getGenres();
         this.getGenre();
+        if(isLoggedIn()){
+            
         this.checkUserGenres();
+        }
 
 
     },

@@ -2,14 +2,14 @@
     <main class="flex justify-center">
         <div class="container flex">
 
-            <aside class="flex-shrink-0 w-64 md:w-96 my-6 mr-6 bg-gray-100 rounded-lg p-4">
+            <aside class="flex-shrink-0 w-64 md:w-96 my-6 mr-6 bg-[#fdffe5] shadow-[#fdffe5] shadow-lg rounded-lg p-4">
                 <form class="max-w-md mx-auto my-4">
                     <label for="default-search"
                         class="mb-2 text-sm font-medium text-gray-400 sr-only dark:text-white">Search</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 end-0 flex items-center pe-3">
                             <button type="submit" class="focus:outline-none">
-                                <svg class="w-4 h-4 text-gray-400 dark:text-gray-400" aria-hidden="true"
+                                <svg class="w-4 h-4 text-[#466149] dark:text-[#466149]" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
@@ -17,23 +17,23 @@
                             </button>
                         </div>
                         <input type="search" id="default-search"
-                            class="block w-full p-4 pe-10 text-sm text-gray-400 border-gray-300 border-b-2 border-0 bg-transparent focus:ring-0 focus:border-blue-500 dark:text-white dark:border-gray-500 dark:focus:border-blue-500"
+                            class="block w-full p-4 pe-10 text-sm text-[#466149] border-[#466149] border-b-2 border-0 bg-transparent focus:ring-0 focus:border-[#86AB89] dark:text-white dark:border-gray-500 dark:focus:border-[#86AB89]"
                             placeholder="Title..." required />
                     </div>
                 </form>
 
                 <ul>
                     <li v-for="(genres, category) in genresByCategory" :key="category" class="mb-4">
-                        <h3 class="font-bold font-medium text-lg mt-10">
-                            <button class="w-full text-left cursor-pointer hover:text-blue-600"
+                        <h3 class="font-bold text-[#EA907A] font-medium text-lg mt-10">
+                            <button class="w-full text-left cursor-pointer hover:text-[#a61b1b]"
                                 @click="filterByCategory(category)">
                                 {{ category }}
                             </button>
                         </h3>
-                        <ul class="mt-3 mb-10 space-y-2 font-serif text-gray-400">
+                        <ul class="mt-3 mb-10 space-y-2 font-serif text-[#466149]">
                             <li v-for="genre in genres" :key="genre.id">
                                 <button
-                                    class="w-full text-left cursor-pointer hover:text-blue-500 hover:bg-gray-100 py-1 rounded transition-all"
+                                    class="w-full text-left cursor-pointer hover:text-[#86AB89]  py-1 rounded transition-all"
                                     @click="filterByGenre(genre.name)">
                                     {{ genre.name }}
                                 </button>
@@ -44,14 +44,14 @@
             </aside>
 
             <section class="flex-1 m-6">
-                <ul class="flex flex-wrap items-center justify-start  dark:text-white p-6   ">
+                <ul class="flex flex-wrap items-center justify-end  text-[#64b0b0] p-6   ">
                     <li>
                         <a href="#" @click.prevent="getForYou"
-                            class=" hover:underline text-gray-400 font-serif text-xl">For You</a>
+                            class=" hover:underline  font-serif text-xl">Para você</a>
                     </li>
                     <li>
                         <a href="#" @click.prevent="getNewReleases"
-                            class="mx-10 hover:underline text-gray-400 font-serif text-xl">Novos Lançamentos</a>
+                            class="mx-10 hover:underline  font-serif text-xl">Lançamentos</a>
                     </li>
 
                 </ul>

@@ -1,8 +1,8 @@
 <template>
   <div class="grid  md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3  gap-6 p-6">
-    <div v-for="book in books" :key="book.id" class="bg-white rounded-lg shadow-md overflow-hidden">
-      <div class="relative">
-        <img :src="book.img_url" :alt="book.title" class="w-full h-64 object-cover" />
+    <div v-for="book in books" :key="book.id" class="bg-[#f5faf8] rounded-lg shadow-md overflow-hidden">
+      <div class="relative p-3">
+        <img :src="book.img_url" :alt="book.title" class="w-full h-64 object-contain" />
 
       </div>
       <div class="p-4">
@@ -24,8 +24,8 @@
           <span class="font-bold text-lg text-green-700">R${{ book.price }}</span>
 
           <RouterLink :to="{ name: 'shopBook', params: { id: book.id } }"
-            class="px-3 py-1 bg-green-200 text-gray-800 rounded-full text-sm hover:bg-primary-dark">
-            Shop
+            class="px-3 py-1 bg-[#86AB89] text-white rounded-full text-sm hover:bg-primary-dark">
+            COMPRAR
           </RouterLink>
         </div>
       </div>

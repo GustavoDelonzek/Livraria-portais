@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('title');
             $table->unsignedBigInteger('author_id');
             $table->unsignedBigInteger('publisher_id');
-            $table->year('published_year');
+            $table->smallInteger('published_year');
             $table->decimal('price', 8, 2);
             $table->integer('stock');
             $table->text('description');
-            $table->string(column: 'img_url');
+            $table->text(column: 'img_url');
             $table->timestamps();
         
             $table->foreign('author_id')->references('id')->on('authors')->onDelete('cascade');

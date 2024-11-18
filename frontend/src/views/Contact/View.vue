@@ -8,7 +8,7 @@
             <textarea
               v-model="form.message"
               placeholder="Message..."
-              class="w-full h-64 p-4 bg-gray-50 rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full h-64 p-4 bg-[#f8ffe5] rounded-md border border-[#466149] text-[#466149] focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></textarea>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -16,7 +16,7 @@
                 v-model="form.name"
                 type="text"
                 placeholder="Your Name*"
-                class="w-full p-3 bg-gray-50 rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                class="w-full p-3 bg-[#f8ffe5] rounded-md border border-[#466149] text-[#466149] focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               >
               
@@ -24,16 +24,16 @@
                 v-model="form.email"
                 type="email"
                 placeholder="Your Email*"
-                class="w-full p-3 bg-gray-50 rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                class="w-full p-3 bg-[#f8ffe5] rounded-md border border-[#466149] text-[#466149] focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               >
             </div>
             
             <button
               @click="handleSubmit"
-              class="px-8 py-2 border-2 border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white transition-colors duration-300 uppercase text-sm tracking-wider"
+              class="border border-[#EA907A] text-[#EA907A] py-2 px-4 hover:bg-[#EA907A] hover:text-white transition duration-300"
             >
-              Send
+              ENVIAR
             </button>
           </div>
   

@@ -3,7 +3,7 @@
     <div class="container mx-auto px-4">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div class="space-y-4">
-          <h2 class="text-2xl font-bold text-[#466149]">Livraria</h2>
+          <h2 class="text-2xl font-bold text-[#466149] flex items-center"><img class="w-12 h-12 object-contain mr-2" src="@/assets/Remove.png"> <span class="text-2xl font-bold font-serif"> Pé de Livro </span></h2>
           <p class="text-sm">Sua fonte confiável para livros e muito mais. Explore nosso vasto catálogo e descubra novas histórias.</p>
           <div class="flex space-x-4">
             <a href="#" class="text-[#466149] hover:text-gray-300 transition-colors duration-300">

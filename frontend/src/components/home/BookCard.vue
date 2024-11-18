@@ -4,12 +4,12 @@
     <h2 class="text-xl font-bold text-center text-[#466149] mb-2">{{ title }}</h2>
 
 
-    <p v-if="!isHovered" class="text-lg text-bold  transition-opacity duration-300 ease-in-out text-[#466149]" @mouseover="isHovered = true" @mouseleave="isHovered = false">
+    <p v-if="!isHovered" class="text-lg text-bold py-2 px-3   transition-opacity duration-300 ease-in-out text-[#466149]" @mouseover="isHovered = true" @mouseleave="isHovered = false">
       R$ {{ price }}
     </p>
 
     <RouterLink :to="{name: 'shopBook', params: {id: id}}" v-if="isHovered"  @mouseover="isHovered = true" 
-    @mouseleave="isHovered = false"  class="text-lg  transition-opacity duration-300 ease-in-out text-bold text-[#466149]">
+    @mouseleave="isHovered = false"  class="hover:rounded-lg   py-2 px-3 hover:bg-[#466149] hover:text-white transition duration-300">
       Comprar
     </RouterLink>
   </div>

@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-gray-50  ">
+    <div class="min-h-screen bg-[#fdffe5]  ">
         <div class="relative h-96 bg-gradient-to-b from-gray-900 to-gray-800">
             <button class="absolute top-6 left-6 text-white" @click="$router.go(-1)">
                 <ArrowLeft class="h-6 w-6" />
@@ -10,16 +10,16 @@
 
         <div v-if="book.id" class="relative px-4 container mx-auto  -mt-64 z-10">
             <div class="flex flex-col md:flex-row gap-6">
-                <img :src="book.img_url" :alt="book.title" class="w-[15rem] sm:w-[18rem] md:w-[18rem] lg:w-[19rem] 
-           min-h-[18rem] sm:min-h-[20rem] md:min-h-[21rem] lg:min-h-[24rem]
-           max-h-[35rem] object-cover rounded-lg shadow-xl mx-auto md:mx-0" />
+                <img :src="book.img_url" :alt="book.title" class="w-[15rem] sm:w-[15rem] md:w-[16rem] lg:w-[17rem] 
+           min-h-[18rem] sm:min-h-[19rem] md:min-h-[20rem] lg:min-h-[22rem]
+           max-h-[26rem] object-cover rounded-lg shadow-2xl mx-auto md:mx-0" />
 
                 <div class="flex-1 md:text-white justify-between flex flex-col  pt-4">
                     <div>
                         <h1 class="text-4xl font-serif mb-4">{{ book.title }}</h1>
                         <div class="flex items-center gap-2 mb-4">
 
-                            <img :src="book.author.img_url" alt="Author" class="w-12 h-12 rounded-full" />
+                            <img :src="book.author.img_url" alt="Author" class="w-12 h-12 object-cover rounded-full" />
 
                             <p class="font-serif">{{ book.author.name }}</p>
 
@@ -104,17 +104,17 @@
 
                     <div class="flex md:max-w-[40vw] gap-4 mb-6">
                         <button
-                            class="flex-1 bg-blue-500 text-white py-3 rounded-full font-medium hover:bg-blue-600 transition-colors">
+                            class="flex-1 bg-[#466149] text-white py-3 rounded-full font-medium hover:bg-[#BFD8AF] hover:text-[#466149] transition-colors">
                             Compre R${{ book.price || '0.00' }}
                         </button>
                         <button @click="addToCart(book)"
-                            class="flex-1 bg-white text-gray-900 py-3 rounded-full font-medium border border-gray-200 hover:bg-gray-50 transition-colors">
+                            class="flex-1 bg-gray-200 text-gray-900 py-3 rounded-full font-medium border border-gray-200 hover:bg-gray-100 transition-colors">
                             Adicionar ao Carrinho
                         </button>
 
 
                         <button @click="toggleBookmark(book)"
-                            class="bg-white text-gray-900 p-3 rounded-full border border-gray-200 hover:bg-gray-50 transition-colors">
+                            class="bg-[#BFD8AF] text-gray-900 p-3 rounded-full border border-gray-200 hover:bg-[#466149] hover:text-white transition-colors">
                             <Bookmark v-if="!isBookmarked(book)" class="h-6 w-6" />
                             <BookmarkCheck v-else></BookmarkCheck>
                         </button>
@@ -189,13 +189,13 @@
             </div>
             <div class=" grid grid-cols-3 mt-8 gap-6  py-4">
                 <div class="mr-12">
-                    <h2 class="text-xl font-bold mb-4 ">Sobre</h2>
+                    <h2 class="text-xl font-bold font-serif mb-4 text-[#86AB89] ">SOBRE   </h2>
                     <p class="text-gray-600 text-sm text-justify leading-relaxed">
                         {{ book.description || 'No description available.' }}
                     </p>
                     <div class="flex gap-2 mt-4">
                         <span v-for="genre in book.genres" :key="genre"
-                            class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">
+                            class="px-3 py-1 bg-[#ebab9b] text-[#a61b1b] rounded-full text-sm">
                             {{ genre.name }}
                         </span>
                     </div>
@@ -219,7 +219,7 @@
                                         :alt="book.title" />
                                     <p class="mt-2 text-sm font-medium text-gray-900 truncate max-w-[180px]">{{
                                         book.title }}</p>
-                                    <p class="text-sm text-blue-500">R$ {{ book.price }}</p>
+                                    <p class="text-sm my-1 text-[#466149]">R$ {{ book.price }}</p>
                                 </button>
 
                             </div>

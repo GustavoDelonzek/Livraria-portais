@@ -1,7 +1,7 @@
 <template>
   <div class="p-5 bg-[#BFD8AF] text-[#466149] shadow-2xl shadow-[#fff] mx-auto flex justify-between items-center">
     <div class="flex items-center space-x-2">
-      <RouterLink to="/"><span class="text-2xl font-bold">Livraria</span></RouterLink>
+      <RouterLink to="/" class="flex items-center"> <img class="w-12 h-12 object-contain mr-2" src="@/assets/Remove.png"> <span class="text-2xl font-bold font-serif"> Pé de Livro      </span></RouterLink>
     </div>
 
     <nav class="hidden md:flex space-x-8 mx-auto">
