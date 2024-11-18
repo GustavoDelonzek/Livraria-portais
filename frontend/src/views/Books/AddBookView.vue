@@ -5,11 +5,17 @@
 <script>
 import axios from 'axios'
 import BookForm from '../../components/BookForm.vue'
-
+import { useToast } from 'vue-toastification';
 export default {
   name: 'AddBook',
   components: {
     BookForm
+  },
+  setup(){
+    const toast = useToast()
+    return{
+      toast
+    }
   },
   methods: {
     async saveBook(formData) {
@@ -17,7 +23,10 @@ export default {
 
       const response = await axios.post(url, formData);
       if (response.status === 200) {
-        alert(response.data.message);
+        this.toast.success(response.data.message, {
+          timeout: 1200
+        });
+        this.$router.push('/admin/books');
       }
 
     }

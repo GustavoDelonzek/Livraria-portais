@@ -128,7 +128,7 @@ export default {
 
         localStorage.removeItem('token');
         this.userInfo = null;
-        await this.$router.push('/login');
+        this.$router.push('/login');
       } catch (error) {
         console.error('Erro ao realizar logout:', error);
       }

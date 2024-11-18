@@ -21,20 +21,20 @@
         <div>
           <h3 class="text-lg font-semibold mb-4 text-[#466149]">Navegação Rápida</h3>
           <ul class="space-y-2">
-            <li><a href="#" class="hover:text-[#466149] transition-colors duration-300">Home</a></li>
-            <li><a href="#" class="hover:text-[#466149] transition-colors duration-300">Catálogo</a></li>
-            <li><a href="#" class="hover:text-[#466149] transition-colors duration-300">Novos Lançamentos</a></li>
-            <li><a href="#" class="hover:text-[#466149] transition-colors duration-300">Ofertas Especiais</a></li>
+            <li><RouterLink to="/" href="#" class="hover:text-[#466149] transition-colors duration-300">Home</RouterLink></li>
+            <li><RouterLink to="/shop" href="#" class="hover:text-[#466149] transition-colors duration-300">Catálogo</RouterLink></li>
+            <li><RouterLink to="/shop" href="#" class="hover:text-[#466149] transition-colors duration-300">Novos Lançamentos</RouterLink></li>
+            <li><RouterLink to="/shop" href="#" class="hover:text-[#466149] transition-colors duration-300">Ofertas Especiais</RouterLink></li>
           </ul>
         </div>
         
         <div>
           <h3 class="text-lg font-semibold mb-4 text-[#466149]">Suporte</h3>
           <ul class="space-y-2">
-            <li><a href="#" class="hover:text-[#466149] transition-colors duration-300">FAQ</a></li>
-            <li><a href="#" class="hover:text-[#466149] transition-colors duration-300">Política de Devolução</a></li>
-            <li><a href="#" class="hover:text-[#466149] transition-colors duration-300">Termos de Serviço</a></li>
-            <li><a href="#" class="hover:text-[#466149] transition-colors duration-300">Contato</a></li>
+            <li><a  class="hover:text-[#466149] transition-colors duration-300">FAQ</a></li>
+            <li><a  class="hover:text-[#466149] transition-colors duration-300">Política de Devolução</a></li>
+            <li><a  class="hover:text-[#466149] transition-colors duration-300">Termos de Serviço</a></li>
+            <li><RouterLink to="/contact" class="hover:text-[#466149] transition-colors duration-300">Contato</RouterLink></li>
           </ul>
         </div>
         

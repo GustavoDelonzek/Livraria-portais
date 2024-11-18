@@ -29,6 +29,8 @@ class BookController extends Controller
         return response()->json(["books" => $booksWithNames]);
     }
 
+
+
     public function search(Request $request)
     {
         $query = $request->input('query');
@@ -37,17 +39,18 @@ class BookController extends Controller
             ->where('title', 'like', "%$query%")
             ->get();
 
-        $booksWithNames = $books->map(function ($book) {
-            $book->author_name = $book->author->name ?? null;
-            $book->publisher_name = $book->publisher->name ?? null;
-            $book->genre_names = $book->genres->pluck('name');
 
-            unset($book->author, $book->publisher, $book->genres);
 
-            return $book;
-        });
+        return response()->json(["books" => $books]);
+    }
 
-        return response()->json(["books" => $booksWithNames]);
+    public function booksOutOfStock()
+    {
+        $books = Book::with(['author:id,name', 'publisher:id,name', 'genres:id,name'])
+            ->where('stock', 0)
+            ->get();
+
+        return response()->json(['books' => $books]);
     }
 
     public function booksByGenre($genre)

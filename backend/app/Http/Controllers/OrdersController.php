@@ -57,7 +57,6 @@ class OrdersController extends Controller
                 }
             }
 
-            // Atualiza o total do pedido
             $order->update(['total' => $total]);
 
             DB::commit();
@@ -69,7 +68,6 @@ class OrdersController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            // Log de erro
             \Log::error('Erro ao processar a compra', [
                 'error' => $e->getMessage(),
                 'request' => $request->all(),
@@ -79,6 +77,47 @@ class OrdersController extends Controller
         }
     }
 
+    public function getTotalBooksSold()
+    {
+        try {
+            $totalBooksSold = OrderItem::sum('quantity');
+
+            return response()->json(['total' => $totalBooksSold]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao calcular total de livros vendidos.'], 500);
+        }
+    }
+
+    public function getTotalOrdersValue()
+    {
+        try {
+            $totalOrdersValue = Order::sum('total');
+
+            return response()->json(['total' => $totalOrdersValue]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao calcular o valor total dos pedidos.'], 500);
+        }
+    }
+
+    public function getAllSales()
+    {
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+
+            if (!$user) {
+                return response()->json(['error' => 'Usuário não autenticado'], 401);
+            }
+
+
+            $sales = Order::orderBy('created_at', 'desc')->get();
+
+            return response()->json(['sales' => $sales]);
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json(['error' => 'Token inválido ou ausente'], 401);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao recuperar todas as vendas.'], 500);
+        }
+    }
 
 
     public function userOrders()
@@ -95,7 +134,7 @@ class OrdersController extends Controller
             ->get();
         DB::commit();
         return response()->json(['orders' => $orders]);
-        
+
     }
 
 

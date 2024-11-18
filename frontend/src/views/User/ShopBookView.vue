@@ -1,13 +1,15 @@
 <template>
     <div class="min-h-screen bg-[#fdffe5]  ">
-        <div class="relative h-96 bg-gradient-to-b from-gray-900 to-gray-800">
-            <button class="absolute top-6 left-6 text-white" @click="$router.go(-1)">
+        <div class="relative h-96">
+            <div class="absolute inset-0 bg-cover bg-center"
+                :style="{ backgroundImage: `url(${book.img_url})`, backgroundSize: '300%', filter: 'blur(4px)' }"></div>
+
+            <div class="absolute inset-0 bg-black opacity-50"></div>
+
+            <button class="absolute top-6 left-6 text-white z-10" @click="$router.go(-1)">
                 <ArrowLeft class="h-6 w-6" />
             </button>
-
-
         </div>
-
         <div v-if="book.id" class="relative px-4 container mx-auto  -mt-64 z-10">
             <div class="flex flex-col md:flex-row gap-6">
                 <img :src="book.img_url" :alt="book.title" class="w-[15rem] sm:w-[15rem] md:w-[16rem] lg:w-[17rem] 
@@ -21,7 +23,8 @@
 
                             <img :src="book.author.img_url" alt="Author" class="w-12 h-12 object-cover rounded-full" />
 
-                            <p class="font-serif">{{ book.author.name }}</p>
+                            <RouterLink :to="`/author/${book.author.id}`" class="font-serif hover:underline ">{{
+                                book.author.name }}</RouterLink>
 
                         </div>
 
@@ -34,7 +37,7 @@
                                         'text-gray-300': i > averageRating
                                     }" class="h-4 w-4 fill-current" />
                                 </div>
-                                <span class="ml-2 text-sm text-gray-600">
+                                <span class="ml-2 text-sm text-white">
                                     ({{ reviews.length }} avaliações)
                                 </span>
                             </button>
@@ -66,7 +69,7 @@
                                                 <div v-if="reviews[currentReviewIndex]">
                                                     <p class="font-medium text-gray-800 text-lg">{{
                                                         reviews[currentReviewIndex].user.name
-                                                    }}</p>
+                                                        }}</p>
                                                     <div class="flex items-center mt-2">
                                                         <StarIcon v-for="n in 5" :key="n" :class="{
                                                             'text-yellow-400 fill-current': n <= reviews[currentReviewIndex].rating,
@@ -102,7 +105,7 @@
                         </div>
                     </div>
 
-                    <div class="flex md:max-w-[40vw] gap-4 mb-6">
+                    <div class="flex mt-8 md:mt-0 md:max-w-[40vw] gap-4 mb-6">
                         <button
                             class="flex-1 bg-[#466149] text-white py-3 rounded-full font-medium hover:bg-[#BFD8AF] hover:text-[#466149] transition-colors">
                             Compre R${{ book.price || '0.00' }}
@@ -187,13 +190,13 @@
                     </div>
                 </div>
             </div>
-            <div class=" grid grid-cols-3 mt-8 gap-6  py-4">
-                <div class="mr-12">
-                    <h2 class="text-xl font-bold font-serif mb-4 text-[#86AB89] ">SOBRE   </h2>
-                    <p class="text-gray-600 text-sm text-justify leading-relaxed">
+            <div class=" grid grid-cols-2 md:grid-cols-3 mt-8 gap-6  py-4">
+                <div class="md:mr-12 text-center md:text-justify col-span-2 md:col-span-1">
+                    <h2 class="text-xl font-bold font-serif mb-4 text-[#86AB89] ">SOBRE </h2>
+                    <p class="text-gray-600 text-sm  leading-relaxed">
                         {{ book.description || 'No description available.' }}
                     </p>
-                    <div class="flex gap-2 mt-4">
+                    <div class="flex justify-center md:justify-start gap-2 mt-4">
                         <span v-for="genre in book.genres" :key="genre"
                             class="px-3 py-1 bg-[#ebab9b] text-[#a61b1b] rounded-full text-sm">
                             {{ genre.name }}
@@ -260,7 +263,7 @@ export default {
     },
     setup() {
         const toast = useToast();
-        
+
         return {
             toast
         }
@@ -350,7 +353,9 @@ export default {
             }
 
             localStorage.setItem('cart', JSON.stringify(cart));
-            this.toast.success(`Adicionado ao carrinho!`);
+            this.toast.success(`Adicionado ao carrinho!`, {
+                timeout: 1000,
+            });
         },
         openModal() {
             this.isModalOpen = true;
@@ -380,17 +385,25 @@ export default {
                     }
                 });
                 if (response.status === 201) {
-                    this.toast.success('Review submitted successfully!');
+                    this.toast.success('Review submitted successfully!', {
+                        timeout: 1000,
+                    });
                     this.resetForm();
                     this.closeModal();
                 }
             } catch (error) {
                 if (error.response.status === 403) {
-                    this.toast.error('Você já tem um review para este livro!');
+                    this.toast.error('Você já tem um review para este livro!', {
+                        timeout: 1000,
+                    });
                 } else if (error.response.status === 401) {
-                    this.toast.error('Usuário não autenticado!');
+                    this.toast.error('Usuário não autenticado!', {
+                        timeout: 1000,
+                    });
                 } else {
-                    this.toast.error('Ocorreu um erro desconhecido ao enviar o comentário.');
+                    this.toast.error('Ocorreu um erro desconhecido ao enviar o comentário.', {
+                        timeout: 1000,
+                    });
                 }
             }
         },
@@ -448,7 +461,9 @@ export default {
 
             localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
 
-            this.toast.info(`${existingBookmark ? 'Removido' : 'Adicionado'} aos favoritos!`);
+            this.toast.info(`${existingBookmark ? 'Removido' : 'Adicionado'} aos favoritos!`, {
+                timeout: 1000,
+            });
         },
 
         isBookmarked(book) {

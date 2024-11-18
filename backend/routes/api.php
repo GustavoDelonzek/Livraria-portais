@@ -17,12 +17,21 @@ Route::post('register',[AuthController::class,'register']);
 Route::middleware('auth:api')->get('/protected', function () {
     return response()->json(['message' => 'Você está autenticado!']);
 });
+
+Route::get('users/total', [AuthController::class, 'getTotalUsers']);
+
 Route::middleware(['auth:api', 'admin'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 Route::post('/checkout', [OrdersController::class,'checkout']);
 Route::get('/has_purchased/{bookId}', [OrdersController::class, 'hasPurchased']);
 Route::get('/orders', [OrdersController::class, 'userOrders']);
+Route::get('/total_sales', [OrdersController::class, 'getTotalBooksSold']);
+Route::get('/orders/total_value', [OrdersController::class, 'getTotalOrdersValue']);
+Route::get('sales', [OrdersController::class, 'getAllSales']);
+
+
+
 
 
 Route::get('books', [BookController::class, 'index']);
@@ -33,6 +42,8 @@ Route::delete('delete_book/{id}', [BookController::class, 'destroy']);
 Route::post('save_book', [BookController::class, 'create']);
 Route::post('update_book/{id}', [BookController::class, 'update']);
 Route::post('/book/{id}/stock', [BookController::class, 'updateStock']);
+Route::get('/books/out_of_stock', [BookController::class, 'booksOutOfStock']);
+
 
 //Route::middleware('auth:sanctum')->post('/logout', [authController::class, 'logout']);
 

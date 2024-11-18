@@ -38,33 +38,31 @@
           </div>
   
           <div class="space-y-6">
-            <h1 class="text-3xl  font-bold text-gray-800">Contact Our Stores</h1>
+            <h1 class="text-3xl  font-bold text-gray-800">Contact Our Stores - Pé de Livro</h1>
             
             <p class="text-gray-600">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim qis
-              veniam, trud exercitation ullamco laboris nisi ut aliquip consequat.
+              Seja bem-vindo ao Pé de Livro, onde histórias ganham vida! Entre em contato com a gente para tirar dúvidas, fazer encomendas ou saber mais sobre nossos eventos literários. Estamos sempre prontos para atender você!
             </p>
             
             <div class="space-y-4">
               <div class="flex items-center space-x-3 text-gray-600">
                 <Phone size="23" />
-                <a href="tel:+4456855231" class="hover:text-gray-800">+445 685 52 31</a>
+                <a href="tel:+4456855231" class="hover:text-gray-800">+55 (42) 4567-1234</a>
               </div>
               
               <div class="flex items-center space-x-3 text-gray-600">
                 <Printer size="23" />
-                <a href="#" class="hover:text-gray-800">Print out online documents</a>
+                <a href="#" class="hover:text-gray-800">Aceitamos pedidos para imprimir seus documentos digitais com praticidade.</a>
               </div>
               
               <div class="flex items-center space-x-3 text-gray-600">
                 <Mail size="23" />
-                <a href="mailto:bridge@exemple.com" class="hover:text-gray-800">bridge@exemple.com</a>
+                <a href="mailto:bridge@exemple.com" class="hover:text-gray-800"> contato@pedelivro.com.br</a>
               </div>
               
               <div class="flex items-center space-x-3 text-gray-600">
                 <MapPin size="23" />
-                <span>4019 Saint James Drive, York, PA</span>
+                <span>Rua das Palavras, 401, Jardim Literário, Guarapuava, PR, Brasil</span>
               </div>
             </div>
           </div>

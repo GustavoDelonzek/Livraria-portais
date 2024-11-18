@@ -65,7 +65,18 @@ class AuthController extends Controller
     {
         JWTAuth::invalidate(JWTAuth::getToken());
 
-        return response()->json(['message' => 'Logout realizado com sucesso']);
+        return response()->json(['message' => 'Logout realizado com sucesso'], 200);
+    }
+
+
+    public function getTotalUsers()
+    {
+        // Conta todos os usuários no banco
+        $totalUsers = User::count();
+
+        return response()->json([
+            'total_users' => $totalUsers
+        ], 200);
     }
 
 

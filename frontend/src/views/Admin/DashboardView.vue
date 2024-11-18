@@ -17,7 +17,7 @@ export default {
 
     <SideBar class="w-64 bg-gray-800 text-white fixed h-full" />
 
-    <div class="flex-1 flex flex-col ml-64">
+    <div class="flex-1 flex flex-col mt-12 sm:ml-64">
 
 
       <main class="p-4">
