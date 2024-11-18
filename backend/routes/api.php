@@ -18,7 +18,6 @@ Route::middleware('auth:api')->get('/protected', function () {
     return response()->json(['message' => 'Você está autenticado!']);
 });
 Route::middleware(['auth:api', 'admin'])->group(function () {
-    Route::get('/admin/home', [AdminController::class, 'home']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 Route::post('/checkout', [OrdersController::class,'checkout']);
