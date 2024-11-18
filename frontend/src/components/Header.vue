@@ -18,11 +18,10 @@
         </span>
       </RouterLink>
 
-      <!-- User Dropdown -->
       <div v-if="userInfo" class="relative">
         <button
           @click="toggleUserDropdown"
-          class="flex items-center text-sm font-medium text-gray-900 hover:text-blue-600 dark:hover:text-blue-500 md:me-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white"
+          class="flex items-center text-sm font-medium text-[#466149] hover:text-gray-500 dark:hover:text-blue-500 md:me-0  "
           type="button"
         >
           {{ userInfo.name }}
@@ -31,7 +30,6 @@
           </svg>
         </button>
 
-        <!-- Dropdown menu -->
         <div
           v-if="isDropdownOpen"
           class="absolute right-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"

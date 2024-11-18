@@ -51,7 +51,7 @@ class BookControllerTest extends TestCase
             'title' => 'Test Book',
             'author_id' => $author->id,
             'publisher_id' => $publisher->id,
-            'published_year' => '2024',
+            'published_year' => 2024,
             'genres' => $genres->pluck('id')->toArray(),
             'price' => 29.99,
             'stock' => 10,

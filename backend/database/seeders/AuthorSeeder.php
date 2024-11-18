@@ -307,7 +307,7 @@ class AuthorSeeder extends Seeder
                 'nationality' => 'Brazilian',
                 'img_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Nelson_Rodrigues_%281971%29.tif/lossy-page1-1200px-Nelson_Rodrigues_%281971%29.tif.jpg'
             ],
-            
+
             [
                 'name' => 'Sun Tzu',
                 'bio' => 'Sun Tzu foi um estrategista militar e filósofo chinês, autor de "A Arte da Guerra", um dos tratados mais influentes sobre estratégia, guerra e liderança.',
@@ -321,7 +321,64 @@ class AuthorSeeder extends Seeder
                 'date_of_birth' => '1955-06-23',
                 'nationality' => 'Brazilian',
                 'img_url' => 'https://upload.wikimedia.org/wikipedia/commons/8/83/Claude_Troisgros_in_Vai_Que_Cola_from_Multishow.png'
+            ],
+            [
+                "name" => "Rupi Kaur",
+                "bio" => "Rupi Kaur é uma poeta e artista canadense de origem indiana, famosa por seus livros de poesia visual, como 'milk and honey' e 'the sun and her flowers'.",
+                "date_of_birth" => "1992-10-04",
+                "nationality" => "Canadian",
+                "img_url" => "https://i.zst.com.br/images/rupi-kaur-conheca-os-livros-de-poesia-da-autora-que-e-sucesso-de-vendas-photo780438686-44-1c-19.jpg"
+            ],
+            [
+                "name" => "John Green",
+                "bio" => "John Green é um autor americano conhecido por romances juvenis como 'A Culpa é das Estrelas' e 'Cidades de Papel'.",
+                "date_of_birth" => "1977-08-24",
+                "nationality" => "American",
+                "img_url" => "https://upload.wikimedia.org/wikipedia/commons/b/b9/John_Green_2020_%28C6txQ5yn5S8%29.jpg"
+            ],
+            [
+                "name" => "Leigh Bardugo",
+                "bio" => "Leigh Bardugo é uma autora americana conhecida por seus romances de fantasia, incluindo 'Sombra e Ossos' e 'Six of Crows'.",
+                "date_of_birth" => "1975-04-06",
+                "nationality" => "American",
+                "img_url" => "https://assets-us-01.kc-usercontent.com/5cb25086-82d2-4c89-94f0-8450813a0fd3/293c3dbc-5a3a-4eb4-b17f-22ed98914480/leigh-bardugo%20%281%29.png?fm=png&auto=format"
+            ],
+            [
+                "name" => "Dan Brown",
+                "bio" => "Dan Brown é um autor americano conhecido por seus thrillers, especialmente pela série de livros protagonizada pelo professor de simbologia Robert Langdon, como 'O Código da Vinci' e 'Anjos e Demônios'. Seus livros combinam história, arte, religião e ciência com enredos de suspense e mistério.",
+                "date_of_birth" => "1964-06-22",
+                "nationality" => "American",
+                "img_url" => "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1sgXVf1_wxoUyLR6Cy8LWiMsTy_R_f5tr-w&s"
+            ],
+            [
+                "name" => "Charles Duhigg",
+                "bio" => "Charles Duhigg é um jornalista e autor americano, conhecido por seu trabalho sobre a ciência dos hábitos e produtividade. Ele é autor de 'O Poder do Hábito' e 'Mais Rápido e Melhor', livros que exploram como hábitos afetam nosso comportamento e como podemos melhorar nosso desempenho pessoal e profissional.",
+                "date_of_birth" => "1974-04-01",
+                "nationality" => "American",
+                "img_url" => "https://m.media-amazon.com/images/S/amzn-author-media-prod/g8lp1cjvrn21jgr240gvojjjiv.jpg"
+            ],
+            [
+                "name" => "E.H. Gombrich",
+                "bio" => "Ernst Hans Gombrich foi um historiador de arte austríaco, considerado um dos mais importantes estudiosos da arte do século XX. Seu trabalho mais famoso, 'A História da Arte', é uma introdução acessível e abrangente à história da arte, abordando de forma didática e clara a evolução das artes visuais ao longo do tempo.",
+                "date_of_birth" => "1909-03-30",
+                "nationality" => "Austrian",
+                "img_url" => "https://andredorigo.com.br/wp-content/uploads/2021/09/CAPA-Ernst_Gombrich.jpg"
+            ],
+            [
+                "name" => "Jon Krakauer",
+                "bio" => "Jon Krakauer é um jornalista e escritor americano, conhecido por suas obras sobre aventura, montanhismo e experiências extremas. Ele ficou famoso por seu livro 'Na Natureza Selvagem', que narra a história de Christopher McCandless, e também por 'Into Thin Air', que relata sua experiência pessoal durante a tragédia no Monte Everest.",
+                "date_of_birth" => "1954-04-12",
+                "nationality" => "American",
+                "img_url" => "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Jon_Krakauer_speaking_in_2009.jpg/1200px-Jon_Krakauer_speaking_in_2009.jpg"
+            ],
+            [
+                "name" => "Dalai Lama",
+                "bio" => "O Dalai Lama, Tenzin Gyatso, é o líder espiritual tibetano e um dos mais conhecidos defensores da paz, compaixão e harmonia entre os povos. Ele é autor de vários livros sobre budismo, meditação e filosofia espiritual, sendo amplamente reconhecido por seu trabalho em promover a paz mundial e os direitos humanos. Recebeu o Prêmio Nobel da Paz em 1989.",
+                "date_of_birth" => "1935-07-06",
+                "nationality" => "Tibetan",
+                "img_url" => "https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/2021/06/26019_28A1592C82B69A06-2.jpg"
             ]
+            
 
 
 

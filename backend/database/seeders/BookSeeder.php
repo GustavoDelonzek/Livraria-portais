@@ -159,7 +159,7 @@ class BookSeeder extends Seeder
                 'stock' => 50,
                 'description' => 'O poema "O Corvo" fala sobre a perda e a dor, onde um homem é visitado por um corvo que lhe traz angústia.',
                 'img_url' => 'https://m.media-amazon.com/images/I/517rNLByjzL._AC_UF894,1000_QL80_.jpg',
-                'genres' => ['Poesia', 'Terror', 'Clássicos']
+                'genres' => ['Poesia', 'Terror', 'Clássicos', 'Conto']
             ],
             [
                 'title' => 'O Conto da Aia',
@@ -515,6 +515,161 @@ class BookSeeder extends Seeder
                 'genres' => ['Culinária', 'Gastronomia', 'Brasil'],
                 'img_url' => 'https://m.media-amazon.com/images/I/91j7+dTA5DL._AC_UF1000,1000_QL80_.jpg'
             ],
+            [
+                'title' => 'Milk and Honey',
+                'author_id' => 45, // Rupi Kaur
+                'publisher_id' => $publishers->random()->id,
+                'published_year' => 2014,
+                'price' => 29.90,
+                'stock' => 50,
+                'description' => 'Uma coleção de poesia sobre sobrevivência, amor, perda e feminilidade, com ilustrações feitas pela própria autora.',
+                'genres' => ['Poesia', 'Feminismo', 'Autoconhecimento'],
+                'img_url' => 'https://m.media-amazon.com/images/I/61OtthMIgGL._AC_UF894,1000_QL80_.jpg'
+            ],
+            [
+                'title' => 'The Sun and Her Flowers',
+                'author_id' => 45, // Rupi Kaur
+                'publisher_id' => $publishers->random()->id,
+                'published_year' => 2017,
+                'price' => 34.90,
+                'stock' => 40,
+                'description' => 'Uma jornada poética sobre crescimento, cura e ancestralidade, com textos e desenhos delicados.',
+                'genres' => ['Poesia', 'Cultura', 'Feminismo'],
+                'img_url' => 'https://m.media-amazon.com/images/I/61+0EmzUSjL._AC_UF1000,1000_QL80_.jpg'
+            ],
+            [
+                'title' => 'A Culpa é das Estrelas',
+                'author_id' => 46, // John Green
+                'publisher_id' => $publishers->random()->id,
+                'published_year' => 2012,
+                'price' => 39.90,
+                'stock' => 60,
+                'description' => 'Uma história comovente sobre amor e perda entre dois adolescentes que enfrentam o câncer com coragem e humor.',
+                'genres' => ['Romance', 'Drama', 'Juvenil'],
+                'img_url' => 'https://m.media-amazon.com/images/I/51M9IbBqxCL._AC_UF1000,1000_QL80_.jpg'
+            ],
+            [
+                'title' => 'Cidades de Papel',
+                'author_id' => 46, // John Green
+                'publisher_id' => $publishers->random()->id,
+                'published_year' => 2008,
+                'price' => 35.90,
+                'stock' => 55,
+                'description' => 'Uma aventura que mistura mistério e romance, enquanto um jovem tenta desvendar o paradeiro de sua amiga desaparecida.',
+                'genres' => ['Mistério', 'Aventura', 'Juvenil'],
+                'img_url' => 'https://m.media-amazon.com/images/I/61otKosI+OL._AC_UF1000,1000_QL80_.jpg'
+            ],
+            [
+                'title' => 'Six of Crows',
+                'author_id' => 47, // Leigh Bardugo
+                'publisher_id' => $publishers->random()->id,
+                'published_year' => 2015,
+                'price' => 44.90,
+                'stock' => 40,
+                'description' => 'Um épico de fantasia que segue um grupo de desajustados em uma missão impossível de roubo.',
+                'genres' => ['Fantasia', 'Aventura', 'Ficção'],
+                'img_url' => 'https://m.media-amazon.com/images/I/91-DipaBR2L._AC_UF1000,1000_QL80_.jpg'
+            ],
+            [
+                'title' => 'Sombra e Ossos',
+                'author_id' => 47, // Leigh Bardugo
+                'publisher_id' => $publishers->random()->id,
+                'published_year' => 2012,
+                'price' => 39.90,
+                'stock' => 45,
+                'description' => 'No Grishaverso, uma jovem descobre um poder incrível que pode ser a chave para salvar seu mundo do mal.',
+                'genres' => ['Fantasia', 'Aventura', 'Romance'],
+                'img_url' => 'https://m.media-amazon.com/images/I/81WKPIFKThL._AC_UF1000,1000_QL80_.jpg'
+            ],
+            
+            [
+                'title' => 'Ventania de Inverno',
+                'author_id' => 2, // George R.R. Martin
+                'publisher_id' => $publishers->random()->id,
+                'published_year' => 2024,
+                'price' => 59.90,
+                'stock' => 80,
+                'description' => 'Uma aventura épica em um mundo devastado por conflitos entre reinos e criaturas místicas.',
+                'genres' => ['Romance', 'Fantasia', 'Drama'],
+                'img_url' => 'https://img.skoob.com.br/zahiECr59Y2tU-HZ_fK-9P2Yj-Y=/600x0/center/top/filters:format(jpeg)/https://skoob.s3.amazonaws.com/livros/230426/OS_VENTOS_DO_INVERNO_1501774228230426SK1501774231B.jpg'
+            ],
+            [
+                'title' => 'Mistério na Mansão Sombria',
+                'author_id' => 4, // Agatha Christie
+                'publisher_id' => $publishers->random()->id,
+                'published_year' => 2019,
+                'price' => 34.90,
+                'stock' => 120,
+                'description' => 'Um thriller de tirar o fôlego em que cada personagem esconde um segredo mortal.',
+                'genres' => ['Mistério', 'Suspense', 'Thriller'],
+                'img_url' => 'https://m.media-amazon.com/images/I/71mlpA9iaeL._AC_UF1000,1000_QL80_.jpg'
+            ],
+            [
+                'title' => 'Memórias Póstumas de Bras Cubas',
+                'author_id' => 5, // Machado de Assis
+                'publisher_id' => $publishers->random()->id,
+                'published_year' => 2021,
+                'price' => 29.90,
+                'stock' => 70,
+                'description' => 'Uma obra que reflete sobre a vida, a morte e os sabores de uma existência vivida intensamente.',
+                'genres' => ['Clássicos', 'Drama'],
+                'img_url' => 'https://static.cestasmichelli.com.br/images/product/rs-6508-29919-0.jpg?ims=750x750'
+            ],
+            [
+                'title' => 'O Código da Vinci',
+                'author_id' => 48, // Dan Brown
+                'publisher_id' => $publishers->random()->id,
+                'published_year' => 2003,
+                'price' => 44.90,
+                'stock' => 90,
+                'description' => 'Um thriller que mistura arte, religião e ciência, com tecnologia moderna como ferramenta fundamental.',
+                'genres' => ['Tecnologia', 'Mistério', 'Thriller', 'Ciência'],
+                'img_url' => 'https://m.media-amazon.com/images/I/91QSDmqQdaL._AC_UF894,1000_QL80_.jpg'
+            ],
+            [
+                'title' => 'O Poder do Hábito',
+                'author_id' => 49, // Charles Duhigg
+                'publisher_id' => $publishers->random()->id,
+                'published_year' => 2012,
+                'price' => 39.90,
+                'stock' => 100,
+                'description' => 'O livro explora como os hábitos são formados e como podemos mudá-los para melhorar nossa vida pessoal e profissional.',
+                'genres' => ['Autoajuda', 'Psicologia'],
+                'img_url' => 'https://m.media-amazon.com/images/I/815iPX0SgkL._AC_UF1000,1000_QL80_.jpg'
+            ],
+            [
+                'title' => 'A História da Arte',
+                'author_id' => 50, // E.H. Gombrich
+                'publisher_id' => $publishers->random()->id,
+                'published_year' => 1950,
+                'price' => 89.90,
+                'stock' => 50,
+                'description' => 'Considerado um dos maiores livros de introdução à história da arte, este livro de E.H. Gombrich abrange mais de 30.000 anos de história artística e é uma leitura essencial para entender a evolução das artes visuais.',
+                'genres' => ['Artes', 'Música', 'Fotografia'],
+                'img_url' => 'https://m.media-amazon.com/images/I/710i2Bp9KVL._AC_UF894,1000_QL80_.jpg'
+            ],
+            [
+                'title' => 'Na Natureza Selvagem',
+                'author_id' => 51, // Jon Krakauer
+                'publisher_id' => $publishers->random()->id,
+                'published_year' => 1996,
+                'price' => 39.90,
+                'stock' => 50,
+                'description' => 'Na Natureza Selvagem é a história verdadeira de Christopher McCandless, um jovem que abandona a vida confortável para viver de forma selvagem no Alasca. O livro investiga as decisões de McCandless e as lições que ele deixou para trás.',
+                'genres' => ['Viagem', 'Aventura', 'Economia'],
+                'img_url' => 'https://books.google.com.br/books/publisher/content?id=otjLDgAAQBAJ&hl=pt-BR&pg=PA1&img=1&zoom=3&bul=1&sig=ACfU3U2wqxanw4jpO3rZnyPEQhtyAPzzJw&w=1280'
+            ],
+            [
+                'title' => 'O Caminho da Felicidade',
+                'author_id' => 52, // Dalai Lama
+                'publisher_id' => $publishers->random()->id,
+                'published_year' => 1998,
+                'price' => 39.90,
+                'stock' => 100,
+                'description' => 'Em "O Caminho da Felicidade", o Dalai Lama oferece ensinamentos sobre como encontrar a verdadeira paz interior e felicidade, abordando a importância da compaixão, do perdão e da meditação. O livro é um guia para uma vida mais plena e consciente, com base nos princípios do budismo tibetano.',
+                'genres' => ['Religião', 'Espiritualidade', 'Filosofia'],
+                'img_url' => 'https://http2.mlstatic.com/D_NQ_NP_627110-MLB43850645246_102020-O.webp'
+            ]
 
         ];
 

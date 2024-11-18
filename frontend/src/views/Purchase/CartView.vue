@@ -1,6 +1,6 @@
 <template>
-  <div class="max-w-3xl mx-auto p-6">
-    <h1 class="text-3xl font-bold mb-6 text-gray-800">Carrinho de Compras</h1>
+  <div class="max-w-3xl min-h-[75vh] my-6  mx-auto p-6">
+    <h1 class="text-3xl  font-bold mb-6 text-gray-800">Carrinho de Compras</h1>
 
     <div v-if="cartItems.length === 0" class="text-center py-10 bg-gray-100 rounded-lg shadow-md">
       <p class="text-lg text-gray-600">Seu carrinho está vazio.</p>
@@ -45,13 +45,15 @@
       </div>
     </div>
   </div>
+  <Footer></Footer>
 </template>
 
 <script>
 import { RouterLink } from 'vue-router';
 import axios from 'axios';
 import { isLoggedIn } from '@/router/index';
-
+import { useToast } from 'vue-toastification';
+import Footer from '@/components/Footer.vue';
 export default {
   name: 'CartView',
   data() {
@@ -59,6 +61,15 @@ export default {
       cartItems: [],
       loading: false
     };
+  },
+  components:{
+    Footer
+  },
+  setup(){
+    const toast = useToast();
+    return{
+      toast
+    }
   },
   computed: {
     cartTotal() {
@@ -69,64 +80,75 @@ export default {
     this.loadCart();
   },
   methods: {
-    loadCart() {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      this.cartItems = cart;
-    },
-    removeFromCart(id) {
-      this.cartItems = this.cartItems.filter(item => item.id !== id);
-      this.updateCart();
-    },
-    updateCart() {
-      localStorage.setItem('cart', JSON.stringify(this.cartItems));
-    },
-    increaseQuantity(item) {
+  loadCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    this.cartItems = cart;
+  },
+  removeFromCart(id) {
+    this.cartItems = this.cartItems.filter(item => item.id !== id);
+    this.updateCart();
+  },
+  updateCart() {
+    localStorage.setItem('cart', JSON.stringify(this.cartItems));
+  },
+  increaseQuantity(item) {
+    if (item.quantity < item.stock) { 
       item.quantity += 1;
       this.updateCart();
-    },
-    decreaseQuantity(item) {
-      if (item.quantity > 1) {
-        item.quantity -= 1;
-        this.updateCart();
-      }
-    },
-    async checkout() {
-      if (isLoggedIn()) {
-        if (this.loading) return;
-        this.loading = true;
-
-        const orderData = {
-          items: this.cartItems.map(item => ({
-            book_id: item.id,
-            quantity: item.quantity
-          }))
-        };
-
-        try {
-          const token = localStorage.getItem('token');
-          const response = await axios.post('http://127.0.0.1:8000/api/checkout', orderData, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          });
-
-          if (response.status === 200) {
-            alert(response.data.message);
-            localStorage.removeItem('cart');
-            this.cartItems = [];
-          }
-        } catch (error) {
-          console.error('Erro ao finalizar a compra', error.response.data);
-          alert('Houve um erro ao finalizar a compra. Tente novamente.');
-        } finally {
-          this.loading = false;
-        }
-      } else {
-        alert("Você precisa estar logado para finalizar a compra.");
-      }
-    },
+    } else {
+      this.toast.warning('Quantidade máxima em estoque atingida.', {
+        timeout: 1600,
+      });
+    }
   },
-};
+  decreaseQuantity(item) {
+    if (item.quantity > 1) {
+      item.quantity -= 1;
+      this.updateCart();
+    }
+  },
+  async checkout() {
+    if (isLoggedIn()) {
+      if (this.loading) return;
+      this.loading = true;
+
+      const orderData = {
+        items: this.cartItems.map(item => ({
+          book_id: item.id,
+          quantity: item.quantity
+        }))
+      };
+
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post('http://127.0.0.1:8000/api/checkout', orderData, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        if (response.status === 200) {
+          this.toast.success(response.data.message, {
+            timeout: 1600
+          });
+          localStorage.removeItem('cart');
+          this.cartItems = [];
+        }
+      } catch (error) {
+        console.error('Erro ao finalizar a compra', error.response.data);
+        this.toast.error(error.response.data.error, {
+          timeout: 2000
+        });
+      } finally {
+        this.loading = false;
+      }
+    } else {
+      this.toast.error("Você precisa estar logado para finalizar a compra.", { timeout: 2000 });
+    }
+  },
+}
+}
+
 </script>
 
 <style scoped>

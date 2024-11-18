@@ -106,7 +106,7 @@
                     </div>
 
                     <div class="flex mt-8 md:mt-0 md:max-w-[40vw] gap-4 mb-6">
-                        <button
+                        <button @click="checkout"
                             class="flex-1 bg-[#466149] text-white py-3 rounded-full font-medium hover:bg-[#BFD8AF] hover:text-[#466149] transition-colors">
                             Compre R${{ book.price || '0.00' }}
                         </button>
@@ -247,7 +247,7 @@ import { onMounted } from 'vue';
 import { props } from 'bluebird';
 import { RouterLink } from 'vue-router';
 import { useToast } from "vue-toastification";
-
+import { isLoggedIn } from '@/router';
 
 export default {
     name: "ShopView",
@@ -303,6 +303,48 @@ export default {
         }
     },
     methods: {
+
+        async checkout() {
+            if (isLoggedIn()) {
+                if (this.loading) return;
+                this.loading = true;
+
+                const orderData = {
+                    items: [
+                        {
+                            book_id: this.book.id,
+                            quantity: 1
+                        }
+                    ]
+                };
+
+                try {
+                    const token = localStorage.getItem('token');
+                    const response = await axios.post('http://127.0.0.1:8000/api/checkout', orderData, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.status === 200) {
+                        this.toast.success(response.data.message, {
+                            timeout: 1600
+                        });
+                        localStorage.removeItem('cart');
+                        this.cartItems = [];
+                    }
+                } catch (error) {
+                    console.error('Erro ao finalizar a compra', error.response.data);
+                    this.toast.error(error.response.data.error, {
+                        timeout: 2000
+                    });
+                } finally {
+                    this.loading = false;
+                }
+            } else {
+                this.toast.error("Você precisa estar logado para finalizar a compra.", { timeout: 2000 });
+            }
+        },
         async getBookById() {
             const url = `http://127.0.0.1:8000/api/get_all_of_book/${this.$route.params.id}`
             try {

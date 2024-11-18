@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto p-6">
+  <div class="container min-h-[75vh] mx-auto my-6 p-6">
     <h1 class="text-3xl font-bold f mb-6 text-center text-green-600">Livros Preferidos</h1>
 
     <div v-if="bookmarks.length === 0" class="text-center text-gray-500">
@@ -44,10 +44,12 @@
       </div>
     </div>
   </div>
+  <Footer></Footer>
 </template>
 
 <script>
 import { Trash2, ShoppingCart } from 'lucide-vue-next';
+import Footer from '@/components/Footer.vue';
 export default {
   data() {
     return {
@@ -56,7 +58,8 @@ export default {
   },
   components: {
     Trash2,
-    ShoppingCart
+    ShoppingCart,
+    Footer
   },
   methods: {
     addToCart(book) {
